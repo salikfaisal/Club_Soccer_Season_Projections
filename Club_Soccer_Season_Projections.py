@@ -36,7 +36,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
 'Freiburg': 'SC Freiburg', 'Fürth': 'Greuther Fürth', 'Fuerth': 'Greuther Fürth', 'Hoffenheim': '1899 Hoffenheim', 
 'Köln': '1. FC Köln', 'Koeln': '1. FC Köln', 'Leverkusen': 'Bayer Leverkusen', 'Mainz': 'Mainz 05', 
 'Gladbach': 'Borussia Mönchengladbach', 'Bayern': 'Bayern Munich', 'Stuttgart': 'VfB Stuttgart', 'Wolfsburg': 'VfL Wolfsburg',
-'Inter': 'Internazionale', 'Milan': 'AC Milan', 'Verona': 'Hellas Verona',
+'Inter': 'Inter Milan', 'Milan': 'AC Milan', 'Verona': 'Hellas Verona',
 'Saint-Etienne': 'Saint-Étienne', 'Paris SG': 'Paris Saint-Germain', 'Forest': 'Nottingham Forest', 'Almeria': 'Almería',
 'Werder': 'Werder Bremen', 'Schalke': 'Schalke 04'}
 wiki_name_changes = {'Milan': 'AC Milan', 'Paris SG': 'Paris Saint-Germain'}

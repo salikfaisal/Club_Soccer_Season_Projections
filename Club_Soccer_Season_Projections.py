@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 import requests
 
 today = date.today()
-t0 = time.time()
 
 # grabs the elo ratings of over 600 soccer clubs from across Europe
 url = 'http://api.clubelo.com/' + str(today)
@@ -38,7 +37,8 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
 'Gladbach': 'Borussia Mönchengladbach', 'Bayern': 'Bayern Munich', 'Stuttgart': 'VfB Stuttgart', 'Wolfsburg': 'VfL Wolfsburg',
 'Inter': 'Inter Milan', 'Milan': 'AC Milan', 'Verona': 'Hellas Verona',
 'Saint-Etienne': 'Saint-Étienne', 'Paris SG': 'Paris Saint-Germain', 'Forest': 'Nottingham Forest', 'Almeria': 'Almería',
-'Werder': 'Werder Bremen', 'Schalke': 'Schalke 04'}
+'Werder': 'Werder Bremen', 'Schalke': 'Schalke 04', 'Brugge': 'Club Brugge', 'Sporting': 'Sporting CP', 'Salzburg': 'RB Salzburg',
+'Shakhtar': 'Shakhtar Donetsk', 'FC Kobenhavn': 'Copenhagen', 'Viktoria Plzen': 'Viktoria Plzeň'}
 wiki_name_changes = {'Milan': 'AC Milan', 'Paris SG': 'Paris Saint-Germain'}
 
 club_elo_dict = {}
@@ -46,11 +46,12 @@ for club in club_ratings:
     if club[1] in elo_name_changes:
         club[1] = elo_name_changes[club[1]]
     club_elo_dict.update({club[1]: club})
-t1 = time.time()
 
 
-# this function retrieves the home field advantage that will be added to each elo rating for a home side in a given country
-def home_field_advantage(country_code):
+# this dictionary retrieves the home field advantage that will be added to each elo rating for a home side in a given country
+country_codes = ['ENG', 'ESP', 'GER', 'ITA', 'FRA', 'POR', 'NED', 'AUT',  'CRO', 'SCO', 'UKR', 'BEL', 'CZE', 'ISR', 'DEN']
+home_field_advantage_dict = {}
+for country_code in country_codes:
     url = 'http://clubelo.com/' + country_code
     page = requests.get(url)
 
@@ -64,7 +65,7 @@ def home_field_advantage(country_code):
                 home_field_advantage += char + search[char_num + 1]
                 break
             home_field_advantage += char
-    return float(home_field_advantage)
+    home_field_advantage_dict.update({country_code: float(home_field_advantage)})
 
 
 
@@ -163,7 +164,7 @@ def final_standings(country_code, fixtures, table, alpha_teams):
 def league_simulations(country_code):
     country_code_to_league = {'ENG': 'Premier_League', 'GER': 'Bundesliga', 'ITA': 'Serie_A', 'ESP': 'La_Liga', 'FRA': 'Ligue_1'}
     league_name = country_code_to_league[country_code]
-    home_advantage = home_field_advantage(country_code)
+    home_advantage = home_field_advantage_dict[country_code]
     clubs_in_league = 20
     if country_code == 'GER':
         clubs_in_league = 18
@@ -281,3 +282,415 @@ for code, league in leagues.items():
         make_ucl = str(round(data[3] * 100)) + '%'
         win_league = str(round(data[4] * 100)) + '%'
         print(line_format.format(pos=position+1, club=data[0], GD=average_gd, Pts=average_pts, UCL=make_ucl, W=win_league))
+
+# Champions League groups initialized
+groups = [['Ajax', 'Liverpool', 'Napoli', 'Rangers'], ['Porto', 'Atlético Madrid', 'Bayer Leverkusen', 'Club Brugge'],
+['Bayern Munich', 'Barcelona', 'Inter Milan', 'Viktoria Plzeň'], ['Eintracht Frankfurt', 'Tottenham Hotspur', 'Sporting CP', 'Marseille'],
+['AC Milan', 'Chelsea', 'RB Salzburg', 'Dinamo Zagreb'], ['Real Madrid', 'RB Leipzig', 'Shakhtar Donetsk', 'Celtic'],
+['Manchester City', 'Sevilla', 'Borussia Dortmund', 'Copenhagen'], ['Paris Saint-Germain', 'Juventus', 'Benfica', 'Maccabi Haifa']]
+
+ucl_summary = []
+group_summary = {}
+for group_number, group in enumerate(groups):
+    for team in group:
+        ucl_summary.append([team, 0, 0, 0, 0, 0, chr(65 + group_number)])
+        group_summary.update({team: [0, 0, 0, 0, 0, 0, chr(65 + group_number)]})
+
+# A class for functions used for the Group Stage
+class group_stage:
+    def __init__(self, group):
+        self.group = group
+
+    # This function returns a list of all of the Group State matches already completed
+    def matches_completed(self):
+        matches_completed = [['Ajax', 'Rangers', 4, 0], ['Napoli', 'Liverpool', 4, 1], ['Liverpool', 'Ajax', 2, 1],
+        ['Rangers', 'Napoli', 0, 3], ['Atlético Madrid', 'Porto', 2, 1], ['Club Brugge', 'Bayer Leverkusen', 1, 0],
+        ['Porto', 'Club Brugge', 0, 4], ['Bayern Leverkusen', 'Atlético Madrid', 2, 0], ['Barcelona', 'Viktoria Plzeň', 5, 1],
+        ['Inter Milan', 'Bayern Munich', 0, 2], ['Viktoria Plzeň', 'Inter Milan', 0, 2], ['Bayern Munich', 'Barcelona', 2, 0],
+        ['Eintracht Frankfurt', 'Sporting CP', 0, 3], ['Tottenham Hotspur', 'Marseille', 2, 0],
+        ['Sporting CP', 'Tottenham Hotspur', 2, 0], ['Marseille', 'Eintracht Frankfurt', 0, 1],
+        ['Dinamo Zagreb', 'Chelsea', 1, 0], ['RB Salzburg', 'AC Milan', 1, 1], ['AC Milan', 'Dinamo Zagreb', 3, 1],
+        ['Chelsea', 'RB Salzburg', 1, 1], ['Celtic', 'Real Madrid', 0, 3], ['RB Leipzig', 'Shaktar Donetsk', 1, 4],
+        ['Shaktar Donetsk', 'Celtic', 1, 1], ['Real Madrid', 'RB Leipzig', 2, 0], ['Borussia Dortmund', 'Copenhagen', 3, 0],
+        ['Sevilla', 'Manchester City', 0, 4], ['Manchester City', 'Borussia Dortmund', 2, 1], ['Copenhagen', 'Sevilla', 0, 0],
+        ['Paris Saint-Germain', 'Juventus', 2, 1], ['Benfica', 'Maccabi Haifa', 2, 0], ['Juventus', 'Benfica', 1, 2],
+        ['Maccabi Haifa', 'Paris Saint-Germain', 1, 3]]
+        return matches_completed
+
+    # This function returns the various matchups within a particular group
+    def group_matches(self):
+        matches = []
+        for team_1_pos, team_1 in enumerate(self.group):
+            for team_2_pos, team_2 in enumerate(self.group):
+                if team_1_pos != team_2_pos:
+                    matches.append([team_1, team_2])
+        return matches
+
+    # This function returns the elo ratings for each team in a Group Stage match
+    def match_ratings(self):
+        matches = self.group_matches()
+        ratings = []
+        for match in matches:
+            rating = []
+            for team_number, team in enumerate(match):
+                if team_number == 0:
+                    home_team_original_elo = float(club_elo_dict[team][4])
+                    home_team_adjusted_elo = home_team_original_elo + home_field_advantage_dict[club_elo_dict[team][2]]
+                    rating.append(home_team_adjusted_elo)
+                else:
+                    rating.append(float(club_elo_dict[team][4]))
+            ratings.append(rating)
+        return ratings
+
+    # This function returns a final simulated group
+    def group_simulation(self):
+        table = {}
+        group_ratings = self.match_ratings()
+        matches_completed = self.matches_completed()
+        for team in self.group:
+            table.update({team: [0, 0, 0, 0]})
+        match_results = []
+        for match_number, match in enumerate(self.group_matches()):
+            simulation_needed = True
+            rating = group_ratings[match_number]
+            team_1_standings = table[match[0]]
+            team_2_standings = table[match[1]]
+            for finished_match in matches_completed:
+                # This checks to see if the match has already been played
+                if match == finished_match[0:2]:
+                    simulation_needed = False
+                    result = finished_match[2:]
+            # This simulates the match if it has not been played yet
+            if simulation_needed:
+                result = match_result(rating[0], rating[1])
+            match_results.append(result)
+            # This updates the standings to reflect the match
+            if result[0] > result[1]:
+                team_1_standings[0] = team_1_standings[0] + 3
+            elif result[0] == result[1]:
+                team_1_standings[0] = team_1_standings[0] + 1
+                team_2_standings[0] = team_2_standings[0] + 1
+            else:
+                team_2_standings[0] = team_2_standings[0] + 3
+            team_1_standings[1] += result[0]
+            team_2_standings[1] += result[1]
+            team_1_standings[2] += result[1]
+            team_2_standings[2] += result[0]
+            team_1_standings[3] = team_1_standings[1] - team_1_standings[2]
+            team_2_standings[3] = team_2_standings[1] - team_2_standings[2]
+            table[match[0]] = team_1_standings
+            table[match[1]] = team_2_standings
+        standings = []
+        for team in table:
+            standing = [team]
+            standing.extend(table[team])
+            standings.append(standing)
+        standings = sorted(standings, key=lambda data: (data[1], data[4], data[2]), reverse=True)
+        ties = []
+        tied_teams = []
+        tied_teams_start = False
+        for position, club_group_stage_standings in enumerate(standings):
+            if position != 0:
+                if club_group_stage_standings[1] == standings[position - 1][1]:
+                    tied_teams_start = True
+                    tied_teams.append([standings[position - 1][0], 0, 0])
+                elif tied_teams_start:
+                    tied_teams.append([standings[position - 1][0], 0, 0])
+                    tied_teams_start = False
+                    ties.append(tied_teams)
+                    tied_teams = []
+        if len(ties) > 0:
+            group_order = {}
+            for original_order, club in enumerate(self.group):
+                group_order.update({club: original_order})
+            for club, group_stats in table.items():
+                group_stats.insert(0, club)
+                group_stats.extend([0, 0])
+                standings.append(group_stats)
+            for tie in ties:
+                for team in tie:
+                    for other_team in tie:
+                        if team != other_team:
+                            team_order = group_order[team[0]]
+                            opp_order = group_order[other_team[0]]
+                            match = match_results[team_order * 3 + opp_order]
+                            if match[0] > match[1]:
+                                team[1] += 3
+                            elif match[0] < match[1]:
+                                other_team[1] += 3
+                            else:
+                                team[1] += 1
+                                other_team[1] += 1
+                            team[2] += match[0] - match[1]
+                            other_team[2] += match[1] - match[0]
+                tie = sorted(tie, key=lambda club_info: (club_info[1], club_info[2]), reverse=True)
+                for club in tie:
+                    table[club[0]][5] = club[1]
+                    table[club[0]][6] = club[2]
+            standings = []
+            for club, club_season in table.items():
+                standings.append(club_season)
+            standings = sorted(standings, key=lambda club_info: (club_info[1], club_info[-2], club_info[-1],
+                                                                     club_info[4], club_info[2]), reverse=True)
+
+        return standings
+
+
+# A class for functions used during the knockout stage
+class knockout_stage:
+    # This sets the matchups for the knockout stage based on the results of the Group Stage
+    def __init__(self, group_winners, group_runners_up):
+        round_of_16_matchups = []
+        if len(round_of_16_matchups) == 0:
+            # this indicates the draw has not occurred yet
+            pot_1 = []
+            pot_2 = []
+            for group_number in range(8):
+                pot_1.append([group_number, group_runners_up[group_number]])
+                pot_2.append([group_number, group_winners[group_number]])
+            draw_works = False
+            random.shuffle(pot_1)
+            while not draw_works:
+                random.shuffle(pot_2)
+                matchups = []
+                for matchup_number, team_1 in enumerate(pot_1):
+                    matchups.append([team_1, pot_2[matchup_number]])
+                for matchup_number, matchup in enumerate(matchups):
+                    if matchup[0][0] == matchup[1][0]:
+                        break
+                    elif club_elo_dict[matchup[0][1]][2] == club_elo_dict[matchup[1][1]][2]:
+                        break
+                    else:
+                        if matchup_number == 7:
+                            for matchup in matchups:
+                                round_of_16_matchups.append([matchup[0][1], matchup[1][1]])
+                            draw_works = True
+        self.round_of_16_matchups = round_of_16_matchups
+
+    # This returns the nations that advanced to the quarterfinals through simulations or returns the actual quarterfinalists
+    # if the matches have been completed
+    def round_of_16(self):
+        r16_matchups = self.round_of_16_matchups
+        quarterfinalists = []
+        # if completed it will be in the format of fist_leg = [['Inter Milan' , 'Liverpool', 0, 2], []] in the order of the
+        # r_16_matchups list
+        first_legs_completed = False
+        second_legs_completed = False
+        first_legs = []
+        # the home side for the fist leg will be first in the second_leg list
+        second_legs = []
+        for matchup_number, matchup in enumerate(r16_matchups):
+            if not first_legs_completed:
+                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[club_elo_dict[matchup[0]][2]]
+                team_2_first_leg_elo = float(club_elo_dict[matchup[1]][4])
+                result = match_result(team_1_first_leg_elo, team_2_first_leg_elo)
+                first_legs.append(matchup + result)
+            if not second_legs_completed:
+                team_1_second_leg_elo = float(club_elo_dict[matchup[0]][4])
+                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[club_elo_dict[matchup[1]][2]]
+                result = match_result(team_1_second_leg_elo, team_2_second_leg_elo)
+                second_legs.append(matchup + result)
+            team_1_aggregate = first_legs[matchup_number][2] + second_legs[matchup_number][2]
+            team_2_aggregate = first_legs[matchup_number][3] + second_legs[matchup_number][3]
+            if team_1_aggregate > team_2_aggregate:
+                quarterfinalists.append(matchup[0])
+            elif team_1_aggregate < team_2_aggregate:
+                quarterfinalists.append(matchup[1])
+            else:
+                quarterfinalists.append(matchup[random.randrange(0,2)])
+        return quarterfinalists
+
+    # This returns the nations that advanced to the quarterfinals and semifinals through simulations or returns the actual
+    # quarterfinalists add semifinalists if the matches have been completed
+    def quarterfinals(self):
+        quarterfinalists = self.round_of_16()
+        semifinalists = []
+        # if completed it will be in the format of fist_leg = [['Inter Milan' , 'Liverpool', 0, 2], []] in the order of the
+        # r_16_matchups list
+        qf_matchups = []
+        if len(qf_matchups) == 0:
+            # this means the quarterfinals draw hasn't occurred yet
+            random.shuffle(quarterfinalists)
+            matchup = []
+            for club in quarterfinalists:
+                matchup.append(club)
+                if len(matchup) == 2:
+                    qf_matchups.append(matchup)
+                    matchup = []
+
+        first_legs_completed = False
+        second_legs_completed = False
+        first_legs = []
+        # the home side for the fist leg will be first in the second_leg list
+        second_legs = []
+        for matchup_number, matchup in enumerate(qf_matchups):
+            if not first_legs_completed:
+                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[club_elo_dict[matchup[0]][2]]
+                team_2_first_leg_elo = float(club_elo_dict[matchup[1]][4])
+                result = match_result(team_1_first_leg_elo, team_2_first_leg_elo)
+                first_legs.append(matchup + result)
+            if not second_legs_completed:
+                team_1_second_leg_elo = float(club_elo_dict[matchup[0]][4])
+                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[club_elo_dict[matchup[1]][2]]
+                result = match_result(team_1_second_leg_elo, team_2_second_leg_elo)
+                second_legs.append(matchup + result)
+            team_1_aggregate = first_legs[matchup_number][2] + second_legs[matchup_number][2]
+            team_2_aggregate = first_legs[matchup_number][3] + second_legs[matchup_number][3]
+            if team_1_aggregate > team_2_aggregate:
+                semifinalists.append(matchup[0])
+            elif team_1_aggregate < team_2_aggregate:
+                semifinalists.append(matchup[1])
+            else:
+                semifinalists.append(matchup[random.randrange(0,2)])
+        return quarterfinalists, semifinalists
+
+    # This returns the nations that advanced to the quarterfinals, semifinals, and final through simulations or returns the actual
+    # quarterfinalists, semifinalists, and finalists if the matches have been completed
+    def semifinals(self):
+        quarterfinalists, semifinalists = self.quarterfinals()
+        finalists = []
+        sf_matchups = []
+        matchup = []
+        for club in semifinalists:
+            matchup.append(club)
+            if len(matchup) == 2:
+                sf_matchups.append(matchup)
+                matchup = []
+
+        first_legs_completed = False
+        second_legs_completed = False
+        first_legs = []
+        # the home side for the fist leg will be first in the second_leg list
+        second_legs = []
+        for matchup_number, matchup in enumerate(sf_matchups):
+            if not first_legs_completed:
+                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[
+                    club_elo_dict[matchup[0]][2]]
+                team_2_first_leg_elo = float(club_elo_dict[matchup[1]][4])
+                result = match_result(team_1_first_leg_elo, team_2_first_leg_elo)
+                first_legs.append(matchup + result)
+            if not second_legs_completed:
+                team_1_second_leg_elo = float(club_elo_dict[matchup[0]][4])
+                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[
+                    club_elo_dict[matchup[1]][2]]
+                result = match_result(team_1_second_leg_elo, team_2_second_leg_elo)
+                second_legs.append(matchup + result)
+            team_1_aggregate = first_legs[matchup_number][2] + second_legs[matchup_number][2]
+            team_2_aggregate = first_legs[matchup_number][3] + second_legs[matchup_number][3]
+            if team_1_aggregate > team_2_aggregate:
+                finalists.append(matchup[0])
+            elif team_1_aggregate < team_2_aggregate:
+                finalists.append(matchup[1])
+            else:
+                finalists.append(matchup[random.randrange(0, 2)])
+        return quarterfinalists, semifinalists, finalists
+
+    # This returns the nations that advanced to the quarterfinals, semifinals, final, and champion through simulations or returns
+    # the actual quarterfinalists, semifinalists, finalists and champions if the matches have been completed
+    def champions_league_final(self):
+        quarterfinalists, semifinalists, finalists = self.semifinals()
+        team_1_elo = float(club_elo_dict[finalists[0]][4])
+        team_2_elo = float(club_elo_dict[finalists[1]][4])
+        result = match_result(team_1_elo, team_2_elo)
+        if result[0] > result[1]:
+            champion = finalists[0]
+        elif result[0] < result[1]:
+            champion = finalists[1]
+        else:
+            champion = finalists[random.randrange(0, 2)]
+        return quarterfinalists, semifinalists, finalists, champion
+
+
+for simulation in range(10000):
+    group_winners = []
+    group_runners_up = []
+
+    # Simulates the Group Stage and stores data for each Group
+    for group in groups:
+        group_sim = group_stage(group)
+        group_sim_results = group_sim.group_simulation()
+        for position, team in enumerate(group_sim_results):
+            summary_info = group_summary[team[0]]
+            summary_info[0] += team[1]
+            summary_info[1] += team[4]
+            summary_info[position + 2] += 1
+            group_summary.update({team[0]: summary_info})
+            if position == 0:
+                group_winners.append(team[0])
+            elif position == 1:
+                group_runners_up.append(team[0])
+    ks_sim = knockout_stage(group_winners, group_runners_up)
+    # Simulates Knockout Stage
+    quarterfinalists, semifinalists, finalists, champion = ks_sim.champions_league_final()
+    # Stores the results of the Knockout Stage
+    for team in ucl_summary:
+        if team[0] == champion:
+            team[1] += 1
+            team[2] += 1
+            team[3] += 1
+            team[4] += 1
+            team[5] += 1
+        elif team[0] in finalists:
+            team[1] += 1
+            team[2] += 1
+            team[3] += 1
+            team[4] += 1
+        elif team[0] in semifinalists:
+            team[1] += 1
+            team[2] += 1
+            team[3] += 1
+        elif team[0] in quarterfinalists:
+            team[1] += 1
+            team[2] += 1
+        elif team[0] in group_winners or team[0] in group_runners_up:
+            team[1] += 1
+
+group_sim_summary = []
+for team, data in group_summary.items():
+    team_info = [team]
+    team_info.extend(data)
+    group_sim_summary.append(team_info)
+group_sim_summary = sorted(group_sim_summary, key=lambda data: (data[1], data[3], data[4], data[5]), reverse=True)
+group_sim_summary = sorted(group_sim_summary, key=lambda data: data[7])
+wc_summary = sorted(ucl_summary, key=lambda data: (data[5], data[4], data[3], data[2], data[1]), reverse=True)
+
+line_format = '{pos:^4}|{team:^25}|{Pts:^15}|{GD:^15}|{KS:^10}|{First:^7}|{Second:^7}|{Third:^7}|{Fourth:^7}|'
+group_format = '{group:^105}'
+
+for team_number, team_stats in enumerate(group_sim_summary):
+    if team_number % 4 == 0:
+        print()
+        group = 'Group ' + team_stats[7]
+        print(group_format.format(group=group))
+        print(line_format.format(pos='Pos', team='Team', Pts='Est. Points', GD='Est. GD', KS='Advance' , First='1st',
+        Second='2nd', Third='3rd', Fourth='4th'))
+        print('-' * 105)
+    position = team_number % 4 + 1
+    team = team_stats[0]
+    points = round(team_stats[1] / 10000, 2)
+    gd = round(team_stats[2] / 10000, 2)
+    advance = str(round((team_stats[3] + team_stats[4])/100)) + '%'
+    first = str(round(team_stats[3]/100)) + '%'
+    second = str(round(team_stats[4]/100)) + '%'
+    third = str(round(team_stats[5]/100)) + '%'
+    fourth = str(round(team_stats[6]/100)) + '%'
+    print(line_format.format(pos=position, team=team, Pts=points, GD=gd, KS=advance, First=first, Second=second, Third=third,
+    Fourth=fourth))
+
+print()
+print()
+line_format = '{Pos:^4}|{team:^25}|{R16:^15}|{QF:^18}|{SF:^12}|{F:^10}|{W:^25}|'
+wc_format = '{title:^116}'
+print(wc_format.format(title='2022-23 UEFA Champions League Forecast'))
+print()
+print(line_format.format(Pos='Pos', team='Team', R16='Round of 16', QF='Quarterfinals', SF='Semifinals', F='Final',
+W='Win Champions League'))
+print('-' * 116)
+for rank, team_stats in enumerate(wc_summary):
+    team = team_stats[0]
+    make_r16 = str(round(team_stats[1] / 100)) +'%'
+    make_qf = str(round(team_stats[2] / 100)) +'%'
+    make_sf = str(round(team_stats[3] / 100)) +'%'
+    make_final = str(round(team_stats[4] / 100)) +'%'
+    win_ucl = str(round(team_stats[5] / 100)) +'%'
+    print(line_format.format(Pos=rank+1, team=team, R16=make_r16, QF=make_qf, SF=make_sf, F=make_final, W=win_ucl))

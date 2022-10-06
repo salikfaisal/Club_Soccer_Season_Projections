@@ -305,16 +305,22 @@ class group_stage:
     def matches_completed(self):
         matches_completed = [['Ajax', 'Rangers', 4, 0], ['Napoli', 'Liverpool', 4, 1], ['Liverpool', 'Ajax', 2, 1],
         ['Rangers', 'Napoli', 0, 3], ['Atlético Madrid', 'Porto', 2, 1], ['Club Brugge', 'Bayer Leverkusen', 1, 0],
-        ['Porto', 'Club Brugge', 0, 4], ['Bayern Leverkusen', 'Atlético Madrid', 2, 0], ['Barcelona', 'Viktoria Plzeň', 5, 1],
+        ['Porto', 'Club Brugge', 0, 4], ['Bayer Leverkusen', 'Atlético Madrid', 2, 0], ['Barcelona', 'Viktoria Plzeň', 5, 1],
         ['Inter Milan', 'Bayern Munich', 0, 2], ['Viktoria Plzeň', 'Inter Milan', 0, 2], ['Bayern Munich', 'Barcelona', 2, 0],
         ['Eintracht Frankfurt', 'Sporting CP', 0, 3], ['Tottenham Hotspur', 'Marseille', 2, 0],
         ['Sporting CP', 'Tottenham Hotspur', 2, 0], ['Marseille', 'Eintracht Frankfurt', 0, 1],
         ['Dinamo Zagreb', 'Chelsea', 1, 0], ['RB Salzburg', 'AC Milan', 1, 1], ['AC Milan', 'Dinamo Zagreb', 3, 1],
-        ['Chelsea', 'RB Salzburg', 1, 1], ['Celtic', 'Real Madrid', 0, 3], ['RB Leipzig', 'Shaktar Donetsk', 1, 4],
-        ['Shaktar Donetsk', 'Celtic', 1, 1], ['Real Madrid', 'RB Leipzig', 2, 0], ['Borussia Dortmund', 'Copenhagen', 3, 0],
+        ['Chelsea', 'RB Salzburg', 1, 1], ['Celtic', 'Real Madrid', 0, 3], ['RB Leipzig', 'Shakhtar Donetsk', 1, 4],
+        ['Shakhtar Donetsk', 'Celtic', 1, 1], ['Real Madrid', 'RB Leipzig', 2, 0], ['Borussia Dortmund', 'Copenhagen', 3, 0],
         ['Sevilla', 'Manchester City', 0, 4], ['Manchester City', 'Borussia Dortmund', 2, 1], ['Copenhagen', 'Sevilla', 0, 0],
         ['Paris Saint-Germain', 'Juventus', 2, 1], ['Benfica', 'Maccabi Haifa', 2, 0], ['Juventus', 'Benfica', 1, 2],
-        ['Maccabi Haifa', 'Paris Saint-Germain', 1, 3]]
+        ['Maccabi Haifa', 'Paris Saint-Germain', 1, 3], ['Bayern Munich', 'Viktoria Plzeň', 5, 0],
+        ['Marseille', 'Sporting CP', 4, 1], ['Porto', 'Bayer Leverkusen', 2, 0], ['Club Brugge', 'Atlético Madrid', 2, 0],
+        ['Ajax', 'Napoli', 1, 6], ['Eintracht Frankfurt', 'Tottenham Hotspur', 0, 0], ['Inter Milan', 'Barcelona', 1, 0],
+        ['Liverpool', 'Rangers', 2, 0], ['RB Salzburg', 'Dinamo Zagreb', 1, 0], ['RB Leipzig', 'Celtic', 3, 1],
+        ['Chelsea', 'AC Milan', 3, 0], ['Juventus', 'Maccabi Haifa', 3, 1], ['Real Madrid', 'Shakhtar Donetsk', 2, 1],
+        ['Sevilla', 'Borussia Dortmund', 1, 4], ['Benfica', 'Paris Saint-Germain', 1, 1],
+        ['Manchester City', 'Copenhagen', 5, 0]]
         return matches_completed
 
     # This function returns the various matchups within a particular group
@@ -619,6 +625,20 @@ for simulation in range(10000):
                 group_winners.append(team[0])
             elif position == 1:
                 group_runners_up.append(team[0])
+    # Checks to see if games registered when inputted
+    # Set to not run. Should be used occasionally to find errors in inputs
+    # if simulation == 0:
+    #     completed_matches_dict = {}
+    #     for club in group_summary:
+    #         completed_matches_dict.update({club: 0})
+    #     completed_matches = group_sim.matches_completed()
+    #     for match in completed_matches:
+    #         home_team = match[0]
+    #         away_team = match[1]
+    #         completed_matches_dict.update({home_team: completed_matches_dict[home_team] + 1})
+    #         completed_matches_dict.update({away_team: completed_matches_dict[away_team] + 1})
+    #     for club, matches_played in completed_matches_dict.items():
+    #         print(club, matches_played)
     ks_sim = knockout_stage(group_winners, group_runners_up)
     # Simulates Knockout Stage
     quarterfinalists, semifinalists, finalists, champion = ks_sim.champions_league_final()

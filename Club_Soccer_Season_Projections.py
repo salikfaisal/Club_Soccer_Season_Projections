@@ -25,20 +25,28 @@ for item in elo_data:
         club_data.append(item)
 
 # changes the names of clubs for a common data point
-elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United', 'Leicester': 'Leicester City', 
-'Man City': 'Manchester City', 'Man United': 'Manchester United', 'Newcastle': 'Newcastle United', 'Norwich': 'Norwich City',
-'Tottenham': 'Tottenham Hotspur', 'West Ham': 'West Ham United', 'Wolves': 'Wolverhampton Wanderers',
-'Atlético': 'Atlético Madrid', 'Atletico': 'Atlético Madrid', 'Betis': 'Real Betis',  'Sociedad': 'Real Sociedad', 
-'Bilbao': 'Athletic Bilbao', 'Celta': 'Celta Vigo', 'Cadiz': 'Cádiz', 'Alaves': 'Alavés',
-'Augsburg': 'FC Augsburg', 'Hertha': 'Hertha BSC', 'Bielefeld': 'Arminia Bielefeld', 'Bochum': 'VfL Bochum', 
-'Dortmund': 'Borussia Dortmund', 'Frankfurt': 'Eintracht Frankfurt', 
-'Freiburg': 'SC Freiburg', 'Fürth': 'Greuther Fürth', 'Fuerth': 'Greuther Fürth', 'Hoffenheim': '1899 Hoffenheim', 
-'Köln': '1. FC Köln', 'Koeln': '1. FC Köln', 'Leverkusen': 'Bayer Leverkusen', 'Mainz': 'Mainz 05', 
-'Gladbach': 'Borussia Mönchengladbach', 'Bayern': 'Bayern Munich', 'Stuttgart': 'VfB Stuttgart', 'Wolfsburg': 'VfL Wolfsburg',
-'Inter': 'Inter Milan', 'Milan': 'AC Milan', 'Verona': 'Hellas Verona',
-'Saint-Etienne': 'Saint-Étienne', 'Paris SG': 'Paris Saint-Germain', 'Forest': 'Nottingham Forest', 'Almeria': 'Almería',
-'Werder': 'Werder Bremen', 'Schalke': 'Schalke 04', 'Brugge': 'Club Brugge', 'Sporting': 'Sporting CP', 'Salzburg': 'RB Salzburg',
-'Shakhtar': 'Shakhtar Donetsk', 'FC Kobenhavn': 'Copenhagen', 'Viktoria Plzen': 'Viktoria Plzeň'}
+elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United', 'Leicester': 'Leicester City',
+                    'Man City': 'Manchester City', 'Man United': 'Manchester United', 'Newcastle': 'Newcastle United',
+                    'Norwich': 'Norwich City',
+                    'Tottenham': 'Tottenham Hotspur', 'West Ham': 'West Ham United',
+                    'Wolves': 'Wolverhampton Wanderers',
+                    'Atlético': 'Atlético Madrid', 'Atletico': 'Atlético Madrid', 'Betis': 'Real Betis',
+                    'Sociedad': 'Real Sociedad',
+                    'Bilbao': 'Athletic Bilbao', 'Celta': 'Celta Vigo', 'Cadiz': 'Cádiz', 'Alaves': 'Alavés',
+                    'Augsburg': 'FC Augsburg', 'Hertha': 'Hertha BSC', 'Bielefeld': 'Arminia Bielefeld',
+                    'Bochum': 'VfL Bochum',
+                    'Dortmund': 'Borussia Dortmund', 'Frankfurt': 'Eintracht Frankfurt',
+                    'Freiburg': 'SC Freiburg', 'Fürth': 'Greuther Fürth', 'Fuerth': 'Greuther Fürth',
+                    'Hoffenheim': '1899 Hoffenheim',
+                    'Köln': '1. FC Köln', 'Koeln': '1. FC Köln', 'Leverkusen': 'Bayer Leverkusen', 'Mainz': 'Mainz 05',
+                    'Gladbach': 'Borussia Mönchengladbach', 'Bayern': 'Bayern Munich', 'Stuttgart': 'VfB Stuttgart',
+                    'Wolfsburg': 'VfL Wolfsburg',
+                    'Inter': 'Inter Milan', 'Milan': 'AC Milan', 'Verona': 'Hellas Verona',
+                    'Saint-Etienne': 'Saint-Étienne', 'Paris SG': 'Paris Saint-Germain', 'Forest': 'Nottingham Forest',
+                    'Almeria': 'Almería',
+                    'Werder': 'Werder Bremen', 'Schalke': 'Schalke 04', 'Brugge': 'Club Brugge',
+                    'Sporting': 'Sporting CP', 'Salzburg': 'RB Salzburg',
+                    'Shakhtar': 'Shakhtar Donetsk', 'FC Kobenhavn': 'Copenhagen', 'Viktoria Plzen': 'Viktoria Plzeň'}
 wiki_name_changes = {'Milan': 'AC Milan', 'Paris SG': 'Paris Saint-Germain'}
 
 club_elo_dict = {}
@@ -47,9 +55,9 @@ for club in club_ratings:
         club[1] = elo_name_changes[club[1]]
     club_elo_dict.update({club[1]: club})
 
-
 # this dictionary retrieves the home field advantage that will be added to each elo rating for a home side in a given country
-country_codes = ['ENG', 'ESP', 'GER', 'ITA', 'FRA', 'POR', 'NED', 'AUT',  'CRO', 'SCO', 'UKR', 'BEL', 'CZE', 'ISR', 'DEN']
+country_codes = ['ENG', 'ESP', 'GER', 'ITA', 'FRA', 'POR', 'NED', 'AUT', 'CRO', 'SCO', 'UKR', 'BEL', 'CZE', 'ISR',
+                 'DEN']
 home_field_advantage_dict = {}
 for country_code in country_codes:
     url = 'http://clubelo.com/' + country_code
@@ -68,7 +76,6 @@ for country_code in country_codes:
     home_field_advantage_dict.update({country_code: float(home_field_advantage)})
 
 
-
 # this function returns a simulation of the results of a game given the elo ratings of the two teams
 def match_result(team_1_elo, team_2_elo):
     # uses the elo formula to get the two-outcome win probability
@@ -79,8 +86,9 @@ def match_result(team_1_elo, team_2_elo):
     # the goal difference as a result of a random simulation
     team_1_margin = round(statistics.NormalDist(team_1_margin_mean, 1.3).inv_cdf(random.random()))
     # the goal probability distribution from 1826 matches in the 2020-21 season in Europe's top 5 leagues
-    goal_prob = [0.25985761226725085, 0.3417305585980285, 0.22343921139101863, 0.1119934282584885, 0.0443592552026287, 
-    0.014786418400876232, 0.0024644030668127055, 0.0008214676889375684, 0.0002738225629791895, 0.0002738225629791895]
+    goal_prob = [0.25985761226725085, 0.3417305585980285, 0.22343921139101863, 0.1119934282584885, 0.0443592552026287,
+                 0.014786418400876232, 0.0024644030668127055, 0.0008214676889375684, 0.0002738225629791895,
+                 0.0002738225629791895]
     gp_list = []
     if abs(team_1_margin) > 9:
         winning_goal_count = abs(team_1_margin)
@@ -90,7 +98,7 @@ def match_result(team_1_elo, team_2_elo):
         total = sum(gp_list)
         cum = 0
         for goal_count, goal_probability in enumerate(gp_list):
-            gp_list[goal_count] = goal_probability/total
+            gp_list[goal_count] = goal_probability / total
         goal_result = random.random()
         for gc, gp in enumerate(gp_list):
             cum += gp
@@ -156,13 +164,15 @@ def final_standings(country_code, fixtures, table, alpha_teams):
             standings = []
             for club, club_season in table.items():
                 standings.append(club_season)
-            standings = sorted(standings, key=lambda club_info: (club_info[4], club_info[-2], club_info[-1], 
-            club_info[3], club_info[1]), reverse=True)
+            standings = sorted(standings, key=lambda club_info: (club_info[4], club_info[-2], club_info[-1],
+                                                                 club_info[3], club_info[1]), reverse=True)
     return standings
+
 
 # this function is the main function
 def league_simulations(country_code):
-    country_code_to_league = {'ENG': 'Premier_League', 'GER': 'Bundesliga', 'ITA': 'Serie_A', 'ESP': 'La_Liga', 'FRA': 'Ligue_1'}
+    country_code_to_league = {'ENG': 'Premier_League', 'GER': 'Bundesliga', 'ITA': 'Serie_A', 'ESP': 'La_Liga',
+                              'FRA': 'Ligue_1'}
     league_name = country_code_to_league[country_code]
     home_advantage = home_field_advantage_dict[country_code]
     clubs_in_league = 20
@@ -253,7 +263,7 @@ def league_simulations(country_code):
             summary_stats[1] += club_season[4]
             summary_stats[0] += club_season[3]
             if rank < rank_needed_for_ucl:
-                summary_stats[2] +=1
+                summary_stats[2] += 1
                 if rank < 1:
                     summary_stats[3] += 1
             simulation_sums.update({club_season[0]: summary_stats})
@@ -264,10 +274,13 @@ def league_simulations(country_code):
                 season_probabilities.append(stat / 10000)
             final_season_probabilities.append(season_probabilities)
     final_season_probabilities = sorted(final_season_probabilities, key=lambda club_info: (club_info[-1], club_info[-2],
-    club_info[-3], club_info[-4]), reverse=True)
+                                                                                           club_info[-3],
+                                                                                           club_info[-4]), reverse=True)
     return final_season_probabilities
 
-leagues = {'ENG': 'Premier League (England)', 'ESP': 'La Liga (Spain)', 'ITA': 'Serie A (Italy)', 'GER': 'Bundesliga (Germany)', 
+
+leagues = {'ENG': 'Premier League (England)', 'ESP': 'La Liga (Spain)', 'ITA': 'Serie A (Italy)',
+           'GER': 'Bundesliga (Germany)',
            'FRA': 'Ligue 1 (France)'}
 line_format = '{pos:^4}|{club:^25}|{GD:^10}|{Pts:^10}|{UCL:^10}|{W:^10}'
 league_name_format = '{league:^75}'
@@ -281,13 +294,17 @@ for code, league in leagues.items():
         average_pts = str(round(data[2]))
         make_ucl = str(round(data[3] * 100)) + '%'
         win_league = str(round(data[4] * 100)) + '%'
-        print(line_format.format(pos=position+1, club=data[0], GD=average_gd, Pts=average_pts, UCL=make_ucl, W=win_league))
+        print(line_format.format(pos=position + 1, club=data[0], GD=average_gd, Pts=average_pts, UCL=make_ucl,
+                                 W=win_league))
 
 # Champions League groups initialized
 groups = [['Ajax', 'Liverpool', 'Napoli', 'Rangers'], ['Porto', 'Atlético Madrid', 'Bayer Leverkusen', 'Club Brugge'],
-['Bayern Munich', 'Barcelona', 'Inter Milan', 'Viktoria Plzeň'], ['Eintracht Frankfurt', 'Tottenham Hotspur', 'Sporting CP', 'Marseille'],
-['AC Milan', 'Chelsea', 'RB Salzburg', 'Dinamo Zagreb'], ['Real Madrid', 'RB Leipzig', 'Shakhtar Donetsk', 'Celtic'],
-['Manchester City', 'Sevilla', 'Borussia Dortmund', 'Copenhagen'], ['Paris Saint-Germain', 'Juventus', 'Benfica', 'Maccabi Haifa']]
+          ['Bayern Munich', 'Barcelona', 'Inter Milan', 'Viktoria Plzeň'],
+          ['Eintracht Frankfurt', 'Tottenham Hotspur', 'Sporting CP', 'Marseille'],
+          ['AC Milan', 'Chelsea', 'RB Salzburg', 'Dinamo Zagreb'],
+          ['Real Madrid', 'RB Leipzig', 'Shakhtar Donetsk', 'Celtic'],
+          ['Manchester City', 'Sevilla', 'Borussia Dortmund', 'Copenhagen'],
+          ['Paris Saint-Germain', 'Juventus', 'Benfica', 'Maccabi Haifa']]
 
 ucl_summary = []
 group_summary = {}
@@ -295,6 +312,7 @@ for group_number, group in enumerate(groups):
     for team in group:
         ucl_summary.append([team, 0, 0, 0, 0, 0, chr(65 + group_number)])
         group_summary.update({team: [0, 0, 0, 0, 0, 0, chr(65 + group_number)]})
+
 
 # A class for functions used for the Group Stage
 class group_stage:
@@ -304,30 +322,46 @@ class group_stage:
     # This function returns a list of all of the Group State matches already completed
     def matches_completed(self):
         matches_completed = [['Ajax', 'Rangers', 4, 0], ['Napoli', 'Liverpool', 4, 1], ['Liverpool', 'Ajax', 2, 1],
-        ['Rangers', 'Napoli', 0, 3], ['Atlético Madrid', 'Porto', 2, 1], ['Club Brugge', 'Bayer Leverkusen', 1, 0],
-        ['Porto', 'Club Brugge', 0, 4], ['Bayer Leverkusen', 'Atlético Madrid', 2, 0], ['Barcelona', 'Viktoria Plzeň', 5, 1],
-        ['Inter Milan', 'Bayern Munich', 0, 2], ['Viktoria Plzeň', 'Inter Milan', 0, 2], ['Bayern Munich', 'Barcelona', 2, 0],
-        ['Eintracht Frankfurt', 'Sporting CP', 0, 3], ['Tottenham Hotspur', 'Marseille', 2, 0],
-        ['Sporting CP', 'Tottenham Hotspur', 2, 0], ['Marseille', 'Eintracht Frankfurt', 0, 1],
-        ['Dinamo Zagreb', 'Chelsea', 1, 0], ['RB Salzburg', 'AC Milan', 1, 1], ['AC Milan', 'Dinamo Zagreb', 3, 1],
-        ['Chelsea', 'RB Salzburg', 1, 1], ['Celtic', 'Real Madrid', 0, 3], ['RB Leipzig', 'Shakhtar Donetsk', 1, 4],
-        ['Shakhtar Donetsk', 'Celtic', 1, 1], ['Real Madrid', 'RB Leipzig', 2, 0], ['Borussia Dortmund', 'Copenhagen', 3, 0],
-        ['Sevilla', 'Manchester City', 0, 4], ['Manchester City', 'Borussia Dortmund', 2, 1], ['Copenhagen', 'Sevilla', 0, 0],
-        ['Paris Saint-Germain', 'Juventus', 2, 1], ['Benfica', 'Maccabi Haifa', 2, 0], ['Juventus', 'Benfica', 1, 2],
-        ['Maccabi Haifa', 'Paris Saint-Germain', 1, 3], ['Bayern Munich', 'Viktoria Plzeň', 5, 0],
-        ['Marseille', 'Sporting CP', 4, 1], ['Porto', 'Bayer Leverkusen', 2, 0], ['Club Brugge', 'Atlético Madrid', 2, 0],
-        ['Ajax', 'Napoli', 1, 6], ['Eintracht Frankfurt', 'Tottenham Hotspur', 0, 0], ['Inter Milan', 'Barcelona', 1, 0],
-        ['Liverpool', 'Rangers', 2, 0], ['RB Salzburg', 'Dinamo Zagreb', 1, 0], ['RB Leipzig', 'Celtic', 3, 1],
-        ['Chelsea', 'AC Milan', 3, 0], ['Juventus', 'Maccabi Haifa', 3, 1], ['Real Madrid', 'Shakhtar Donetsk', 2, 1],
-        ['Sevilla', 'Borussia Dortmund', 1, 4], ['Benfica', 'Paris Saint-Germain', 1, 1],
-        ['Manchester City', 'Copenhagen', 5, 0], ['Maccabi Haifa', 'Juventus', 2, 0], ['Copenhagen', 'Manchester City', 0, 0],
-        ['Paris Saint-Germain', 'Benfica', 1, 1], ['Dinamo Zagreb', 'RB Salzburg', 1, 1],
-        ['Borussia Dortmund', 'Sevilla', 1, 1], ['AC Milan', 'Chelsea', 0, 2], ['Shakhtar Donetsk', 'Real Madrid', 1, 1],
-        ['Celtic', 'RB Leipzig', 0, 2], ['Napoli', 'Ajax', 4, 2], ['Atlético Madrid', 'Club Brugge', 0, 0],
-        ['Bayer Leverkusen', 'Porto', 0, 3], ['Rangers', 'Liverpool', 1, 7], ['Barcelona', 'Inter Milan', 3, 3],
-        ['Viktoria Plzeň', 'Bayern Munich', 2, 4], ['Tottenham Hotspur', 'Eintracht Frankfurt', 3, 2],
-        ['Sporting CP', 'Marseille', 0, 2]
-                     ]
+                             ['Rangers', 'Napoli', 0, 3], ['Atlético Madrid', 'Porto', 2, 1],
+                             ['Club Brugge', 'Bayer Leverkusen', 1, 0], ['Porto', 'Club Brugge', 0, 4],
+                             ['Bayer Leverkusen', 'Atlético Madrid', 2, 0], ['Barcelona', 'Viktoria Plzeň', 5, 1],
+                             ['Inter Milan', 'Bayern Munich', 0, 2], ['Viktoria Plzeň', 'Inter Milan', 0, 2],
+                             ['Bayern Munich', 'Barcelona', 2, 0], ['Eintracht Frankfurt', 'Sporting CP', 0, 3],
+                             ['Tottenham Hotspur', 'Marseille', 2, 0], ['Sporting CP', 'Tottenham Hotspur', 2, 0],
+                             ['Marseille', 'Eintracht Frankfurt', 0, 1], ['Dinamo Zagreb', 'Chelsea', 1, 0],
+                             ['RB Salzburg', 'AC Milan', 1, 1], ['AC Milan', 'Dinamo Zagreb', 3, 1],
+                             ['Chelsea', 'RB Salzburg', 1, 1], ['Celtic', 'Real Madrid', 0, 3],
+                             ['RB Leipzig', 'Shakhtar Donetsk', 1, 4], ['Shakhtar Donetsk', 'Celtic', 1, 1],
+                             ['Real Madrid', 'RB Leipzig', 2, 0], ['Borussia Dortmund', 'Copenhagen', 3, 0],
+                             ['Sevilla', 'Manchester City', 0, 4], ['Manchester City', 'Borussia Dortmund', 2, 1],
+                             ['Copenhagen', 'Sevilla', 0, 0], ['Paris Saint-Germain', 'Juventus', 2, 1],
+                             ['Benfica', 'Maccabi Haifa', 2, 0], ['Juventus', 'Benfica', 1, 2],
+                             ['Maccabi Haifa', 'Paris Saint-Germain', 1, 3], ['Bayern Munich', 'Viktoria Plzeň', 5, 0],
+                             ['Marseille', 'Sporting CP', 4, 1], ['Porto', 'Bayer Leverkusen', 2, 0],
+                             ['Club Brugge', 'Atlético Madrid', 2, 0], ['Ajax', 'Napoli', 1, 6],
+                             ['Eintracht Frankfurt', 'Tottenham Hotspur', 0, 0], ['Inter Milan', 'Barcelona', 1, 0],
+                             ['Liverpool', 'Rangers', 2, 0], ['RB Salzburg', 'Dinamo Zagreb', 1, 0],
+                             ['RB Leipzig', 'Celtic', 3, 1], ['Chelsea', 'AC Milan', 3, 0],
+                             ['Juventus', 'Maccabi Haifa', 3, 1], ['Real Madrid', 'Shakhtar Donetsk', 2, 1],
+                             ['Sevilla', 'Borussia Dortmund', 1, 4], ['Benfica', 'Paris Saint-Germain', 1, 1],
+                             ['Manchester City', 'Copenhagen', 5, 0], ['Maccabi Haifa', 'Juventus', 2, 0],
+                             ['Copenhagen', 'Manchester City', 0, 0], ['Paris Saint-Germain', 'Benfica', 1, 1],
+                             ['Dinamo Zagreb', 'RB Salzburg', 1, 1], ['Borussia Dortmund', 'Sevilla', 1, 1],
+                             ['AC Milan', 'Chelsea', 0, 2], ['Shakhtar Donetsk', 'Real Madrid', 1, 1],
+                             ['Celtic', 'RB Leipzig', 0, 2], ['Napoli', 'Ajax', 4, 2],
+                             ['Atlético Madrid', 'Club Brugge', 0, 0], ['Bayer Leverkusen', 'Porto', 0, 3],
+                             ['Rangers', 'Liverpool', 1, 7], ['Barcelona', 'Inter Milan', 3, 3],
+                             ['Viktoria Plzeň', 'Bayern Munich', 2, 4],
+                             ['Tottenham Hotspur', 'Eintracht Frankfurt', 3, 2], ['Sporting CP', 'Marseille', 0, 2],
+                             ['RB Salzburg', 'Chelsea', 0, 2], ['Sevilla', 'Copenhagen', 3, 0],
+                             ['Paris Saint-Germain', 'Maccabi Haifa', 7, 2],
+                             ['Borussia Dortmund', 'Manchester City', 0, 0], ['Dinamo Zagreb', 'AC Milan', 0, 4],
+                             ['Benfica', 'Juventus', 4, 3], ['Celtic', 'Shakhtar Donetsk', 1, 1],
+                             ['RB Leipzig', 'Real Madrid', 3, 3], ['Inter Milan', 'Viktoria Plzeň', 4, 0], 
+                             ['Club Brugge', 'Porto', 0, 4], ['Eintracht Frankfurt', 'Marseille', 2, 1],
+                             ['Barcelona', 'Bayern Munich', 0, 3], ['Ajax', 'Liverpool', 0, 3],
+                             ['Atlético Madrid', 'Bayer Leverkusen', 2, 2], ['Tottenham Hotspur', 'Sporting CP', 1, 1],
+                             ['Napoli', 'Rangers', 3, 0]]
         return matches_completed
 
     # This function returns the various matchups within a particular group
@@ -444,7 +478,7 @@ class group_stage:
             for club, club_season in table.items():
                 standings.append(club_season)
             standings = sorted(standings, key=lambda club_info: (club_info[1], club_info[-2], club_info[-1],
-                                                                     club_info[4], club_info[2]), reverse=True)
+                                                                 club_info[4], club_info[2]), reverse=True)
 
         return standings
 
@@ -494,13 +528,15 @@ class knockout_stage:
         second_legs = []
         for matchup_number, matchup in enumerate(r16_matchups):
             if not first_legs_completed:
-                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[club_elo_dict[matchup[0]][2]]
+                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[
+                    club_elo_dict[matchup[0]][2]]
                 team_2_first_leg_elo = float(club_elo_dict[matchup[1]][4])
                 result = match_result(team_1_first_leg_elo, team_2_first_leg_elo)
                 first_legs.append(matchup + result)
             if not second_legs_completed:
                 team_1_second_leg_elo = float(club_elo_dict[matchup[0]][4])
-                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[club_elo_dict[matchup[1]][2]]
+                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[
+                    club_elo_dict[matchup[1]][2]]
                 result = match_result(team_1_second_leg_elo, team_2_second_leg_elo)
                 second_legs.append(matchup + result)
             team_1_aggregate = first_legs[matchup_number][2] + second_legs[matchup_number][2]
@@ -510,7 +546,7 @@ class knockout_stage:
             elif team_1_aggregate < team_2_aggregate:
                 quarterfinalists.append(matchup[1])
             else:
-                quarterfinalists.append(matchup[random.randrange(0,2)])
+                quarterfinalists.append(matchup[random.randrange(0, 2)])
         return quarterfinalists
 
     # This returns the nations that advanced to the quarterfinals and semifinals through simulations or returns the actual
@@ -538,13 +574,15 @@ class knockout_stage:
         second_legs = []
         for matchup_number, matchup in enumerate(qf_matchups):
             if not first_legs_completed:
-                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[club_elo_dict[matchup[0]][2]]
+                team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[
+                    club_elo_dict[matchup[0]][2]]
                 team_2_first_leg_elo = float(club_elo_dict[matchup[1]][4])
                 result = match_result(team_1_first_leg_elo, team_2_first_leg_elo)
                 first_legs.append(matchup + result)
             if not second_legs_completed:
                 team_1_second_leg_elo = float(club_elo_dict[matchup[0]][4])
-                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[club_elo_dict[matchup[1]][2]]
+                team_2_second_leg_elo = float(club_elo_dict[matchup[1]][4]) + home_field_advantage_dict[
+                    club_elo_dict[matchup[1]][2]]
                 result = match_result(team_1_second_leg_elo, team_2_second_leg_elo)
                 second_legs.append(matchup + result)
             team_1_aggregate = first_legs[matchup_number][2] + second_legs[matchup_number][2]
@@ -554,7 +592,7 @@ class knockout_stage:
             elif team_1_aggregate < team_2_aggregate:
                 semifinalists.append(matchup[1])
             else:
-                semifinalists.append(matchup[random.randrange(0,2)])
+                semifinalists.append(matchup[random.randrange(0, 2)])
         return quarterfinalists, semifinalists
 
     # This returns the nations that advanced to the quarterfinals, semifinals, and final through simulations or returns the actual
@@ -689,20 +727,21 @@ for team_number, team_stats in enumerate(group_sim_summary):
         print()
         group = 'Group ' + team_stats[7]
         print(group_format.format(group=group))
-        print(line_format.format(pos='Pos', team='Team', Pts='Est. Points', GD='Est. GD', KS='Advance' , First='1st',
-        Second='2nd', Third='3rd', Fourth='4th'))
+        print(line_format.format(pos='Pos', team='Team', Pts='Est. Points', GD='Est. GD', KS='Advance', First='1st',
+                                 Second='2nd', Third='3rd', Fourth='4th'))
         print('-' * 105)
     position = team_number % 4 + 1
     team = team_stats[0]
     points = round(team_stats[1] / 10000, 2)
     gd = round(team_stats[2] / 10000, 2)
-    advance = str(round((team_stats[3] + team_stats[4])/100)) + '%'
-    first = str(round(team_stats[3]/100)) + '%'
-    second = str(round(team_stats[4]/100)) + '%'
-    third = str(round(team_stats[5]/100)) + '%'
-    fourth = str(round(team_stats[6]/100)) + '%'
-    print(line_format.format(pos=position, team=team, Pts=points, GD=gd, KS=advance, First=first, Second=second, Third=third,
-    Fourth=fourth))
+    advance = str(round((team_stats[3] + team_stats[4]) / 100)) + '%'
+    first = str(round(team_stats[3] / 100)) + '%'
+    second = str(round(team_stats[4] / 100)) + '%'
+    third = str(round(team_stats[5] / 100)) + '%'
+    fourth = str(round(team_stats[6] / 100)) + '%'
+    print(line_format.format(pos=position, team=team, Pts=points, GD=gd, KS=advance, First=first, Second=second,
+                             Third=third,
+                             Fourth=fourth))
 
 print()
 print()
@@ -711,13 +750,13 @@ wc_format = '{title:^116}'
 print(wc_format.format(title='2022-23 UEFA Champions League Forecast'))
 print()
 print(line_format.format(Pos='Pos', team='Team', R16='Round of 16', QF='Quarterfinals', SF='Semifinals', F='Final',
-W='Win Champions League'))
+                         W='Win Champions League'))
 print('-' * 116)
 for rank, team_stats in enumerate(wc_summary):
     team = team_stats[0]
-    make_r16 = str(round(team_stats[1] / 100)) +'%'
-    make_qf = str(round(team_stats[2] / 100)) +'%'
-    make_sf = str(round(team_stats[3] / 100)) +'%'
-    make_final = str(round(team_stats[4] / 100)) +'%'
-    win_ucl = str(round(team_stats[5] / 100)) +'%'
-    print(line_format.format(Pos=rank+1, team=team, R16=make_r16, QF=make_qf, SF=make_sf, F=make_final, W=win_ucl))
+    make_r16 = str(round(team_stats[1] / 100)) + '%'
+    make_qf = str(round(team_stats[2] / 100)) + '%'
+    make_sf = str(round(team_stats[3] / 100)) + '%'
+    make_final = str(round(team_stats[4] / 100)) + '%'
+    win_ucl = str(round(team_stats[5] / 100)) + '%'
+    print(line_format.format(Pos=rank + 1, team=team, R16=make_r16, QF=make_qf, SF=make_sf, F=make_final, W=win_ucl))

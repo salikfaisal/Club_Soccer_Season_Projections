@@ -361,7 +361,15 @@ class group_stage:
                              ['Club Brugge', 'Porto', 0, 4], ['Eintracht Frankfurt', 'Marseille', 2, 1],
                              ['Barcelona', 'Bayern Munich', 0, 3], ['Ajax', 'Liverpool', 0, 3],
                              ['Atlético Madrid', 'Bayer Leverkusen', 2, 2], ['Tottenham Hotspur', 'Sporting CP', 1, 1],
-                             ['Napoli', 'Rangers', 3, 0]]
+                             ['Napoli', 'Rangers', 3, 0], ['Porto', 'Atlético Madrid', 2, 1],
+                             ['Bayer Leverkusen', 'Club Brugge', 0, 0], ['Bayern Munich', 'Inter Milan', 2, 0],
+                             ['Liverpool', 'Napoli', 2, 0], ['Marseille', 'Tottenham Hotspur', 1, 2],
+                             ['Rangers', 'Ajax', 1, 3], ['Viktoria Plzeň', 'Barcelona', 2, 4],
+                             ['Sporting CP', 'Eintracht Frankfurt', 1, 2], ['Real Madrid', 'Celtic', 5, 1],
+                             ['Shakhtar Donetsk', 'RB Leipzig', 0, 4], ['AC Milan', 'RB Salzburg', 4, 0],
+                             ['Maccabi Haifa', 'Benfica', 1, 6], ['Copenhagen', 'Borussia Dortmund', 1, 1],
+                             ['Manchester City', 'Sevilla', 3, 1], ['Juventus', 'Paris Saint-Germain', 1, 2],
+                             ['Chelsea', 'Dinamo Zagreb', 2, 1]]
         return matches_completed
 
     # This function returns the various matchups within a particular group

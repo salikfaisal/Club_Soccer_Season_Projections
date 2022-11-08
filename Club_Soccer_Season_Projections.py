@@ -495,7 +495,11 @@ class group_stage:
 class knockout_stage:
     # This sets the matchups for the knockout stage based on the results of the Group Stage
     def __init__(self, group_winners, group_runners_up):
-        round_of_16_matchups = []
+        round_of_16_matchups = [['Paris Saint-Germain', 'Bayern Munich'], ['AC Milan', 'Tottenham Hotspur'],
+                                ['Club Brugge', 'Benfica'], ['Borussia Dortmund', 'Chelsea'],
+                                ['Liverpool', 'Real Madrid'], ['Eintracht Frankfurt', 'Napoli'],
+                                ['RB Leipzig', 'Manchester City'], ['Inter Milan', 'Porto']
+                                ]
         if len(round_of_16_matchups) == 0:
             # this indicates the draw has not occurred yet
             pot_1 = []

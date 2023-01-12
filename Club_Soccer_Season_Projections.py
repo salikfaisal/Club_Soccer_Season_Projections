@@ -1,7 +1,7 @@
 from datetime import date
 import random
 import statistics
-import time
+import pandas as pd
 
 from bs4 import BeautifulSoup
 import requests
@@ -213,7 +213,7 @@ def league_simulations(country_code):
         rank_needed_for_ucl = 3
     simulation_sums = {}
     for team in alphabetized_teams:
-        simulation_sums.update({team: [0, 0, 0, 0]})
+        simulation_sums.update({team: [0, 0, 0, 0, 0]})
     for simulation in range(10000):
         table = {}
         league_fixtures = []
@@ -263,9 +263,11 @@ def league_simulations(country_code):
             summary_stats[1] += club_season[4]
             summary_stats[0] += club_season[3]
             if rank < rank_needed_for_ucl:
-                summary_stats[2] += 1
+                summary_stats[3] += 1
                 if rank < 1:
-                    summary_stats[3] += 1
+                    summary_stats[4] += 1
+            elif rank >= (clubs_in_league - 3):
+                summary_stats[2] += 1
             simulation_sums.update({club_season[0]: summary_stats})
         final_season_probabilities = []
         for club, summary_stats in simulation_sums.items():
@@ -274,26 +276,38 @@ def league_simulations(country_code):
                 season_probabilities.append(stat / 10000)
             final_season_probabilities.append(season_probabilities)
     final_season_probabilities = sorted(final_season_probabilities, key=lambda club_info: (club_info[-1], club_info[-2],
-                                                                                           club_info[-3],
-                                                                                           club_info[-4]), reverse=True)
+                                                                                           club_info[2],
+                                                                                           club_info[1]), reverse=True)
     return final_season_probabilities
 
 
 leagues = {'ENG': 'Premier League (England)', 'ESP': 'La Liga (Spain)', 'ITA': 'Serie A (Italy)',
            'GER': 'Bundesliga (Germany)',
            'FRA': 'Ligue 1 (France)'}
+league_csv_name = {'ENG': 'Premier_League_Expected_Results.csv', 'ESP': 'La_Liga_Expected_Results.csv',
+                   'ITA': 'Serie_A_Expected_Results.csv', 'GER': 'Bundesliga_Expected_Results.csv',
+                   'FRA': 'Ligue_1_Expected_Results.csv'}
 line_format = '{pos:^4}|{club:^25}|{GD:^10}|{Pts:^10}|{UCL:^10}|{W:^10}'
 league_name_format = '{league:^75}'
 for code, league in leagues.items():
     league_probabilities = league_simulations(code)
+    league_df = pd.DataFrame(league_probabilities,
+                             columns=['Team', 'Avg_GD', 'Avg_Points', 'Relegated', 'Make UCL', 'Win League'])
+    if code == 'GER':
+        league_df = league_df.rename(columns={'Relegated': 'Bottom_3'})
+    league_df['Position'] = list(range(1, len(league_probabilities) + 1))
+    league_df = league_df.set_index("Position")
+    csv_name = league_csv_name[code]
+    # exports league data to csv file
+    league_df.to_csv(csv_name, index=True, header=True)
     print(league_name_format.format(league=league))
     print(line_format.format(pos='Pos', club='Team', GD='Avg. GD', Pts='Avg. Pts', UCL='Make UCL', W='Win League'))
     print('-' * 75)
     for position, data in enumerate(league_probabilities):
         average_gd = str(round(data[1]))
         average_pts = str(round(data[2]))
-        make_ucl = str(round(data[3] * 100)) + '%'
-        win_league = str(round(data[4] * 100)) + '%'
+        make_ucl = str(round(data[4] * 100)) + '%'
+        win_league = str(round(data[5] * 100)) + '%'
         print(line_format.format(pos=position + 1, club=data[0], GD=average_gd, Pts=average_pts, UCL=make_ucl,
                                  W=win_league))
 
@@ -357,7 +371,7 @@ class group_stage:
                              ['Paris Saint-Germain', 'Maccabi Haifa', 7, 2],
                              ['Borussia Dortmund', 'Manchester City', 0, 0], ['Dinamo Zagreb', 'AC Milan', 0, 4],
                              ['Benfica', 'Juventus', 4, 3], ['Celtic', 'Shakhtar Donetsk', 1, 1],
-                             ['RB Leipzig', 'Real Madrid', 3, 3], ['Inter Milan', 'Viktoria Plzeň', 4, 0], 
+                             ['RB Leipzig', 'Real Madrid', 3, 3], ['Inter Milan', 'Viktoria Plzeň', 4, 0],
                              ['Club Brugge', 'Porto', 0, 4], ['Eintracht Frankfurt', 'Marseille', 2, 1],
                              ['Barcelona', 'Bayern Munich', 0, 3], ['Ajax', 'Liverpool', 0, 3],
                              ['Atlético Madrid', 'Bayer Leverkusen', 2, 2], ['Tottenham Hotspur', 'Sporting CP', 1, 1],
@@ -729,7 +743,7 @@ for team, data in group_summary.items():
     group_sim_summary.append(team_info)
 group_sim_summary = sorted(group_sim_summary, key=lambda data: (data[1], data[3], data[4], data[5]), reverse=True)
 group_sim_summary = sorted(group_sim_summary, key=lambda data: data[7])
-wc_summary = sorted(ucl_summary, key=lambda data: (data[5], data[4], data[3], data[2], data[1]), reverse=True)
+ucl_summary = sorted(ucl_summary, key=lambda data: (data[5], data[4], data[3], data[2], data[1]), reverse=True)
 
 line_format = '{pos:^4}|{team:^25}|{Pts:^15}|{GD:^15}|{KS:^10}|{First:^7}|{Second:^7}|{Third:^7}|{Fourth:^7}|'
 group_format = '{group:^105}'
@@ -758,13 +772,13 @@ for team_number, team_stats in enumerate(group_sim_summary):
 print()
 print()
 line_format = '{Pos:^4}|{team:^25}|{R16:^15}|{QF:^18}|{SF:^12}|{F:^10}|{W:^25}|'
-wc_format = '{title:^116}'
-print(wc_format.format(title='2022-23 UEFA Champions League Forecast'))
+ucl_format = '{title:^116}'
+print(ucl_format.format(title='2022-23 UEFA Champions League Forecast'))
 print()
 print(line_format.format(Pos='Pos', team='Team', R16='Round of 16', QF='Quarterfinals', SF='Semifinals', F='Final',
                          W='Win Champions League'))
 print('-' * 116)
-for rank, team_stats in enumerate(wc_summary):
+for rank, team_stats in enumerate(ucl_summary):
     team = team_stats[0]
     make_r16 = str(round(team_stats[1] / 100)) + '%'
     make_qf = str(round(team_stats[2] / 100)) + '%'
@@ -772,3 +786,35 @@ for rank, team_stats in enumerate(wc_summary):
     make_final = str(round(team_stats[4] / 100)) + '%'
     win_ucl = str(round(team_stats[5] / 100)) + '%'
     print(line_format.format(Pos=rank + 1, team=team, R16=make_r16, QF=make_qf, SF=make_sf, F=make_final, W=win_ucl))
+
+gs_pd = pd.DataFrame(group_sim_summary, columns=['Club', 'Avg_GS', 'Avg_GA', '1st', '2nd', '3rd', '4th', 'Group'])
+ks_pd = pd.DataFrame(ucl_summary, columns=['Club', 'Make_R16', 'Make_QF', 'Make_SF', 'Make_Final', 'Win_UCL', 'Group'])
+
+
+# converts values in data frame to a percentage
+def percentage_converter(row):
+    if len(row) == 8:
+        row['Avg_GS'] /= 10000
+        row['Avg_GA'] /= 10000
+        row['1st'] /= 10000
+        row['2nd'] /= 10000
+        row['3rd'] /= 10000
+        row['4th'] /= 10000
+    else:
+        row['Make_R16'] /= 10000
+        row['Make_QF'] /= 10000
+        row['Make_SF'] /= 10000
+        row['Make_Final'] /= 10000
+        row['Win_UCL'] /= 10000
+    return row
+
+
+gs_pd = gs_pd.apply(percentage_converter, axis='columns')
+ks_pd = ks_pd.apply(percentage_converter, axis='columns')
+
+# changing the order of the columns in the data frame
+gs_pd = gs_pd[['Group', 'Club', 'Avg_GS', 'Avg_GA', '1st', '2nd', '3rd', '4th']]
+ks_pd = ks_pd.drop(['Group'], axis=1)
+
+gs_pd.to_csv('UCL_Group_Stage_Expected_Results.csv', index=False, header=True)
+ks_pd.to_csv('UCL_Knockout_Stage_Expected_Results.csv', index=False, header=True)

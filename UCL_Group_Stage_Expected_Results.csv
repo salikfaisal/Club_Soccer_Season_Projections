@@ -1,0 +1,33 @@
+Group,Club,Avg_GS,Avg_GA,1st,2nd,3rd,4th
+A,Napoli,15.0,14.0,1.0,0.0,0.0,0.0
+A,Liverpool,15.0,11.0,0.0,1.0,0.0,0.0
+A,Ajax,6.0,-5.0,0.0,0.0,1.0,0.0
+A,Rangers,0.0,-20.0,0.0,0.0,0.0,1.0
+B,Porto,12.0,5.0,1.0,0.0,0.0,0.0
+B,Club Brugge,11.0,3.0,0.0,1.0,0.0,0.0
+B,Atlético Madrid,5.0,-4.0,0.0,0.0,1.0,0.0
+B,Bayer Leverkusen,5.0,-4.0,0.0,0.0,0.0,1.0
+C,Bayern Munich,18.0,16.0,1.0,0.0,0.0,0.0
+C,Inter Milan,10.0,3.0,0.0,1.0,0.0,0.0
+C,Barcelona,7.0,0.0,0.0,0.0,1.0,0.0
+C,Viktoria Plzeň,0.0,-19.0,0.0,0.0,0.0,1.0
+D,Tottenham Hotspur,11.0,2.0,1.0,0.0,0.0,0.0
+D,Eintracht Frankfurt,10.0,-1.0,0.0,1.0,0.0,0.0
+D,Sporting CP,7.0,-1.0,0.0,0.0,1.0,0.0
+D,Marseille,6.0,0.0,0.0,0.0,0.0,1.0
+E,Chelsea,13.0,7.0,1.0,0.0,0.0,0.0
+E,AC Milan,10.0,5.0,0.0,1.0,0.0,0.0
+E,RB Salzburg,6.0,-5.0,0.0,0.0,1.0,0.0
+E,Dinamo Zagreb,4.0,-7.0,0.0,0.0,0.0,1.0
+F,Real Madrid,14.0,10.0,1.0,0.0,0.0,0.0
+F,RB Leipzig,10.0,3.0,0.0,1.0,0.0,0.0
+F,Shakhtar Donetsk,6.0,-2.0,0.0,0.0,1.0,0.0
+F,Celtic,2.0,-11.0,0.0,0.0,0.0,1.0
+G,Manchester City,14.0,12.0,1.0,0.0,0.0,0.0
+G,Borussia Dortmund,9.0,5.0,0.0,1.0,0.0,0.0
+G,Sevilla,5.0,-6.0,0.0,0.0,1.0,0.0
+G,Copenhagen,3.0,-11.0,0.0,0.0,0.0,1.0
+H,Paris Saint-Germain,14.0,9.0,1.0,0.0,0.0,0.0
+H,Benfica,14.0,9.0,0.0,1.0,0.0,0.0
+H,Juventus,3.0,-4.0,0.0,0.0,1.0,0.0
+H,Maccabi Haifa,3.0,-14.0,0.0,0.0,0.0,1.0

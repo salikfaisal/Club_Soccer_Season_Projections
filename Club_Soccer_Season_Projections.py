@@ -218,7 +218,11 @@ def league_simulations(country_code):
         table = {}
         league_fixtures = []
         for team in alphabetized_teams:
-            table.update({team: [0, 0, 0, 0]})
+            # Juventus are facing a 15 point deduction in the 2022-23 Season
+            if team == 'Juventus':
+                table.update({team: [0, 0, 0, -15]})
+            else:
+                table.update({team: [0, 0, 0, 0]})
         for club, club_results in club_results_dict.items():
             season_stats = table[club]
             fixtures = [club]

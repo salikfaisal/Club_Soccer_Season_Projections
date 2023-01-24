@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1c56d5c-21ee-409e-914e-7ec64f9b262b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Club_Soccer_Season_Projections.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Club_Soccer_Season_Projections.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bundesliga_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Bundesliga_Expected_Results.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Club_Soccer_Season_Projections.py" beforeDir="false" afterPath="$PROJECT_DIR$/Club_Soccer_Season_Projections.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/La_Liga_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/La_Liga_Expected_Results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ligue_1_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Ligue_1_Expected_Results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Premier_League_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Premier_League_Expected_Results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie_A_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Serie_A_Expected_Results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UCL_Knockout_Stage_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/UCL_Knockout_Stage_Expected_Results.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

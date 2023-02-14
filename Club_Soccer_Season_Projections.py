@@ -2,15 +2,16 @@ from datetime import date
 import random
 import statistics
 import pandas as pd
-
 from bs4 import BeautifulSoup
 import requests
 
+# gets the date in the form of '2023-02-08'
 today = date.today()
 
 # grabs the elo ratings of over 600 soccer clubs from across Europe
 url = 'http://api.clubelo.com/' + str(today)
 elo_data = requests.get(url).text.split(',')
+
 
 club_ratings = []
 club_data = []
@@ -55,7 +56,8 @@ for club in club_ratings:
         club[1] = elo_name_changes[club[1]]
     club_elo_dict.update({club[1]: club})
 
-# this dictionary retrieves the home field advantage that will be added to each elo rating for a home side in a given country
+# this dictionary retrieves the home field advantage that will be added to each elo rating for a home side in a given
+# country
 country_codes = ['ENG', 'ESP', 'GER', 'ITA', 'FRA', 'POR', 'NED', 'AUT', 'CRO', 'SCO', 'UKR', 'BEL', 'CZE', 'ISR',
                  'DEN']
 home_field_advantage_dict = {}
@@ -185,7 +187,6 @@ def league_simulations(country_code):
     club_results_dict = {}
     club_results = []
     alphabetized_teams = []
-
     # grabs the results and fixture list in the season
     for line_num, line in enumerate(search):
         if line_num % (clubs_in_league * 2 + 3) == 0:
@@ -213,7 +214,7 @@ def league_simulations(country_code):
         rank_needed_for_ucl = 3
     simulation_sums = {}
     for team in alphabetized_teams:
-        simulation_sums.update({team: [0, 0, 0, 0, 0]})
+        simulation_sums.update({team: [0, 0, 0, 0, 0, 0]})
     for simulation in range(10000):
         table = {}
         league_fixtures = []
@@ -266,6 +267,7 @@ def league_simulations(country_code):
             summary_stats = simulation_sums[club_season[0]]
             summary_stats[1] += club_season[4]
             summary_stats[0] += club_season[3]
+            summary_stats[-1] += rank + 1
             if rank < rank_needed_for_ucl:
                 summary_stats[3] += 1
                 if rank < 1:
@@ -279,9 +281,11 @@ def league_simulations(country_code):
             for stat in summary_stats:
                 season_probabilities.append(stat / 10000)
             final_season_probabilities.append(season_probabilities)
-    final_season_probabilities = sorted(final_season_probabilities, key=lambda club_info: (club_info[-1], club_info[-2],
+    final_season_probabilities = sorted(final_season_probabilities, key=lambda club_info: (club_info[-2]
+                                                                                           , club_info[-3],
                                                                                            club_info[2],
                                                                                            club_info[1]), reverse=True)
+    final_season_probabilities = sorted(final_season_probabilities, key=lambda club_info: club_info[-1])
     return final_season_probabilities
 
 
@@ -291,12 +295,12 @@ leagues = {'ENG': 'Premier League (England)', 'ESP': 'La Liga (Spain)', 'ITA': '
 league_csv_name = {'ENG': 'Premier_League_Expected_Results.csv', 'ESP': 'La_Liga_Expected_Results.csv',
                    'ITA': 'Serie_A_Expected_Results.csv', 'GER': 'Bundesliga_Expected_Results.csv',
                    'FRA': 'Ligue_1_Expected_Results.csv'}
-line_format = '{pos:^4}|{club:^25}|{GD:^10}|{Pts:^10}|{UCL:^10}|{W:^10}'
-league_name_format = '{league:^75}'
+line_format = '{pos:^4}|{club:^25}|{Avg_Pos:^10}|{GD:^10}|{Pts:^10}|{UCL:^10}|{W:^12}'
+league_name_format = '{league:^89}'
 for code, league in leagues.items():
     league_probabilities = league_simulations(code)
     league_df = pd.DataFrame(league_probabilities,
-                             columns=['Team', 'Avg_GD', 'Avg_Points', 'Relegated', 'Make UCL', 'Win League'])
+                             columns=['Team', 'Avg_Pos', 'Avg_GD', 'Avg_Points', 'Relegated', 'Make UCL', 'Win League'])
     if code == 'GER':
         league_df = league_df.rename(columns={'Relegated': 'Bottom_3'})
     league_df['Position'] = list(range(1, len(league_probabilities) + 1))
@@ -305,14 +309,15 @@ for code, league in leagues.items():
     # exports league data to csv file
     league_df.to_csv(csv_name, index=True, header=True)
     print(league_name_format.format(league=league))
-    print(line_format.format(pos='Pos', club='Team', GD='Avg. GD', Pts='Avg. Pts', UCL='Make UCL', W='Win League'))
-    print('-' * 75)
+    print(line_format.format(pos='Pos', club='Team', Avg_Pos='Avg. Pos', GD='Avg. GD', Pts='Avg. Pts', UCL='Make UCL', W='Win League'))
+    print('-' * 89)
     for position, data in enumerate(league_probabilities):
+        average_pos = str(round(data[6], 1))
         average_gd = str(round(data[1]))
         average_pts = str(round(data[2]))
         make_ucl = str(round(data[4] * 100)) + '%'
         win_league = str(round(data[5] * 100)) + '%'
-        print(line_format.format(pos=position + 1, club=data[0], GD=average_gd, Pts=average_pts, UCL=make_ucl,
+        print(line_format.format(pos=position + 1, club=data[0], Avg_Pos=average_pos, GD=average_gd, Pts=average_pts, UCL=make_ucl,
                                  W=win_league))
 
 # Champions League groups initialized

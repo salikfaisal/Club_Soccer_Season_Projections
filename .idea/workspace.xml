@@ -4,6 +4,7 @@
     <list default="true" id="d1c56d5c-21ee-409e-914e-7ec64f9b262b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bundesliga_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Bundesliga_Expected_Results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Club_Soccer_Season_Projections.py" beforeDir="false" afterPath="$PROJECT_DIR$/Club_Soccer_Season_Projections.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/La_Liga_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/La_Liga_Expected_Results.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ligue_1_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Ligue_1_Expected_Results.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Premier_League_Expected_Results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Premier_League_Expected_Results.csv" afterDir="false" />
@@ -83,5 +84,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Club_Soccer_Season_Projections.py</url>
+          <line>785</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

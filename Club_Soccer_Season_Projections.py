@@ -609,10 +609,11 @@ class knockout_stage:
                     qf_matchups.append(matchup)
                     matchup = []
 
-        first_legs_completed = False
+        first_legs_completed = True
         second_legs_completed = False
-        first_legs = []
-        # the home side for the fist leg will be first in the second_leg list
+        first_legs = [['Real Madrid', 'Chelsea', 2, 0], ['Manchester City', 'Bayern Munich', 3, 0],
+                      ['AC Milan', 'Napoli', 1, 0], ['Benfica', 'Inter Milan', 0, 2]]
+        # the home side for the first leg will be first in the second_leg list
         second_legs = []
         for matchup_number, matchup in enumerate(qf_matchups):
             if not first_legs_completed:

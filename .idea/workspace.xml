@@ -90,7 +90,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Club_Soccer_Season_Projections.py</url>
-          <line>790</line>
+          <line>793</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

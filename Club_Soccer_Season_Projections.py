@@ -219,11 +219,13 @@ def league_simulations(country_code):
         table = {}
         league_fixtures = []
         for team in alphabetized_teams:
+            # Point Deduction Reversed
             # Juventus are facing a 15 point deduction in the 2022-23 Season
-            if team == 'Juventus':
-                table.update({team: [0, 0, 0, -15]})
-            else:
-                table.update({team: [0, 0, 0, 0]})
+            # if team == 'Juventus':
+            #     table.update({team: [0, 0, 0, -15]})
+            # else:
+            #     table.update({team: [0, 0, 0, 0]})
+            table.update({team: [0, 0, 0, 0]})
         for club, club_results in club_results_dict.items():
             season_stats = table[club]
             fixtures = [club]
@@ -610,11 +612,12 @@ class knockout_stage:
                     matchup = []
 
         first_legs_completed = True
-        second_legs_completed = False
+        second_legs_completed = True
         first_legs = [['Real Madrid', 'Chelsea', 2, 0], ['Manchester City', 'Bayern Munich', 3, 0],
                       ['AC Milan', 'Napoli', 1, 0], ['Benfica', 'Inter Milan', 0, 2]]
         # the home side for the first leg will be first in the second_leg list
-        second_legs = []
+        second_legs = [['Real Madrid', 'Chelsea', 2, 0], ['Manchester City', 'Bayern Munich', 1, 0],
+                       ['AC Milan', 'Napoli', 1, 1], ['Benfica', 'Inter Milan', 1, 3]]
         for matchup_number, matchup in enumerate(qf_matchups):
             if not first_legs_completed:
                 team_1_first_leg_elo = float(club_elo_dict[matchup[0]][4]) + home_field_advantage_dict[

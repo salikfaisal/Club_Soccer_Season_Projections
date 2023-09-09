@@ -1,6 +1,6 @@
 # Club_Soccer_Season_Projections
 
-Welcome to Club_Soccer_Season_Projections, a project that provides insights into 10,000 simulated league seasons across 7 domestic football leagues in Europe.
+Club_Soccer_Season_Projections utilizes Expected Goals (xG) data and squad quality ratings within an elo-based Monte Carlo model to predict the final standings in 7 major European soccer leagues and the UEFA Champions League. These projections are generated through 10,000 simulations for each competition.
 
 ## Overview
 

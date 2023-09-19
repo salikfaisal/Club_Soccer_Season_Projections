@@ -798,12 +798,12 @@ for team_number, team_stats in enumerate(group_sim_summary):
 print()
 print()
 line_format = '{Pos:^4}|{team:^25}|{R16:^15}|{QF:^18}|{SF:^12}|{F:^10}|{W:^25}|'
-ucl_format = '{title:^81}'
+ucl_format = '{title:^117}'
 print(ucl_format.format(title='2022-23 UEFA Champions League Forecast'))
 print()
 print(line_format.format(Pos='Pos', team='Team', R16='Round of 16', QF='Quarterfinals', SF='Semifinals', F='Final',
                          W='Win Champions League'))
-print('-' * 81)
+print('-' * 117)
 for rank, team_stats in enumerate(ucl_summary):
     team = team_stats[0]
     make_r16 = str(round(team_stats[1] / 100)) + '%'

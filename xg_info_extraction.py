@@ -6,6 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
 
+# took around 750 minutes to extract ALL match data
 total_start_time = time.time()
 
 # installs driver
@@ -115,7 +116,7 @@ for season in seasons:
         elif league == 'Championship':
             total_num_of_matches = 552
         num_of_matches = 0
-        for row_num in range(500):
+        for row_num in range(700):
             if num_of_matches == total_num_of_matches:
                 break
             element_finder = "//tr[@data-row='" + str(row_num) + "']"

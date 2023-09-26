@@ -59,7 +59,9 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Lubin': 'Zagłębie Lubin', 'Odense': 'OB', 'Hajduk': 'Hajduk Split', 'Dnipro': 'Dnipro-1',
                     'Hearts': 'Heart of Midlothian', 'StGallen': 'St. Gallen', 'Rakow': 'Raków Częstochowa',
                     'Estrela Amadora': 'Estrela da Amadora', 'Heerenveen': 'SC Heerenveen', 'Nijmegen': 'NEC', 'Zwolle':
-                    'PEC Zwolle', 'Waalwijk': 'RKC Waalwijk', 'Backa Topola': 'TSC', 'Dunajska': 'DAC Dunajská Streda'
+                    'PEC Zwolle', 'Waalwijk': 'RKC Waalwijk', 'Backa Topola': 'TSC', 'Dunajska': 'DAC Dunajská Streda',
+                    'Klaksvik': 'KÍ', 'Breidablik': 'Breiðablik', 'Nordsjaelland': 'Nordsjælland',
+                    'Pogon': 'Pogoń Szczecin', 'Lillestrom': 'Lillestrøm'
                     }
 
 # changes the name of clubs from the Football Transfers website
@@ -97,7 +99,8 @@ football_transfers_name_changes = {'Milan': 'AC Milan', 'Atlético de Madrid': '
                                    'Rapid Vienna': 'Rapid Wien', 'Sepsi OSK Sf. Gheorghe': 'Sepsi OSK',
                                    'Zaglebie Lubin': 'Zagłębie Lubin', 'Odense Boldklub': 'OB', 'AZ Alkmaar': 'AZ',
                                    'Heerenveen': 'SC Heerenveen', 'Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
-                                   'Waalwijk': 'RKC Waalwijk'
+                                   'Waalwijk': 'RKC Waalwijk', 'Nordsjaelland': 'Nordsjælland',
+                                   'Pogon Szczecin': 'Pogoń Szczecin'
                                    }
 # changes the name of Clubs on the WikiTable
 wiki_name_changes = {'Paris SG': 'Paris Saint-Germain'}
@@ -135,7 +138,9 @@ fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton 
                       'QPR': 'Queens Park Rangers', 'Hearts': 'Heart of Midlothian', 'Vidi': 'Fehérvár',
                       'Estrela': 'Estrela da Amadora', 'Heidenheim': '1. FC Heidenheim', 'AZ Alkmaar': 'AZ',
                       'Heerenveen': 'SC Heerenveen', 'NEC Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
-                      'Waalwijk': 'RKC Waalwijk'
+                      'Waalwijk': 'RKC Waalwijk', 'Olimpija': 'Olimpija Ljubljana', 'TSC Bačka Top': 'TSC',
+                      'Aris Limassol FC': 'Aris Limassol', 'Häcken': 'BK Häcken', 'Servette FC': 'Servette',
+                      'RKS Raków': 'Raków Częstochowa'
                       }
 
 # These are lists that contain data for clubs that were not able to be found in the Elo Ratings from 8/1/2017
@@ -146,12 +151,12 @@ xg_missing_club_names = ['Mallorca', 'SC Paderborn', 'Lecce', 'Elche', 'Monza', 
                          'Cambuur', 'Mura', 'Volendam', 'Spartak Trnava', 'Ballkani', 'Anorthosis', 'Fortuna Sittard',
                          'De Graafschap', 'Santa Clara', 'Bodø/Glimt', 'RFS', 'Dnipro-1', 'Union SG',
                          'Peterborough United', 'Plymouth Argyle', 'Estrela da Amadora', 'Almere City', 'TSC',
-                         'Dunajska']
+                         'Dunajska', 'KÍ', 'Breiðablik', 'Servette', 'Aris Limassol', 'Raków Częstochowa']
 
 xg_missing_club_countries = ['ESP', 'GER', 'ITA', 'ESP', 'ITA', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG',
                              'POR', 'POR', 'POR', 'POR', 'NED', 'NED', 'POR', 'POR', 'NED', 'POR', 'NED', 'CYP', 'NED',
                              'SVN', 'NED', 'SLK', 'KOS', 'CYP', 'NED', 'NED', 'POR', 'NOR', 'LAT', 'UKR', 'BEL', 'ENG',
-                             'ENG', 'POR', 'NED', 'SRB', 'SLK']
+                             'ENG', 'POR', 'NED', 'SRB', 'SLK', 'FAR', 'ISL', 'SUI', 'CYP', 'POL']
 
 # These Elo Ratings were determined by looking at the closest Rating to when the Club's Rating is in use
 xg_missing_club_elo_ratings = [1501.40551758, 1357.40759277, 1373.2545166, 1470.01879883, 1386.21459961, 1374.68078613,
@@ -161,7 +166,8 @@ xg_missing_club_elo_ratings = [1501.40551758, 1357.40759277, 1373.2545166, 1470.
                                1459.00878906, 1295.49084473, 1161.25476074, 1380.20788574, 1384.20422363, 1014.16369629,
                                1445.86584473, 1275.10205078, 1275.10205078, 1360.27355957, 1180.12976074, 1128.54516602,
                                1350.01940918, 1315.92456055, 1443.22253418, 1423.65393066, 1405.84973145, 1404.53405762,
-                               1131.38134766, 1344.78076172]
+                               1131.38134766, 1344.78076172, 910.591674805, 1162.21923828, 1358.60681152, 1395.20166016,
+                               1222.75012207]
 
 xg_missing_club_df = pd.DataFrame({"Rank": 'None', "Club": xg_missing_club_names, "Country": xg_missing_club_countries,
                                    "Level": "None", "Elo": xg_missing_club_elo_ratings, "From": '2017-08-01',

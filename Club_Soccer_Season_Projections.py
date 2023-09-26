@@ -388,7 +388,14 @@ class group_stage:
 
     # This function returns a list of all of the Group State matches already completed
     def matches_completed(self):
-        matches_completed = []
+        matches_completed = [['AC Milan', 'Newcastle United', 0, 0], ['Galatasaray', 'Copenhagen', 2, 2],
+                             ['Bayern Munich', 'Manchester United', 4, 3], ['Sevilla', 'Lens', 1, 1],
+                             ['Arsenal', 'PSV Eindhoven', 4, 0], ['Real Madrid', 'Union Berlin', 1, 1],
+                             ['Braga', 'Napoli', 1, 2], ['Real Sociedad', 'Inter Milan', 1, 1],
+                             ['Benfica', 'RB Salzburg', 0, 2], ['Feyenoord', 'Celtic', 2, 0],
+                             ['Lazio', 'Atlético Madrid', 1, 1], ['Paris Saint-Germain', 'Borussia Dortmund', 2, 0],
+                             ['Young Boys', 'RB Leipzig', 1, 3], ['Manchester City', 'Red Star Belgrade', 3, 1],
+                             ['Barcelona', 'Antwerp', 5, 0], ['Shakhtar Donetsk', 'Porto', 1, 3]]
         # [Home, Away, Home Goals, Away Goals]
         return matches_completed
 

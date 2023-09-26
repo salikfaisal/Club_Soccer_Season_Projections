@@ -57,60 +57,61 @@ away_xgs = []
 leagues = []
 
 season_start_time = time.time()
-# skips over European Club Competitions as the Group Phases have yet to start
-# still needs a bit adjusting
-# for comp, comp_code in euro_comp_codes.items():
-#     # gets the url for the season page
-#     url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + comp + \
-#     '-Scores-and-Fixtures'
-#     driver.get(url)
-#
-#     # waits 10 seconds for the page to load
-#     driver.implicitly_wait(10)
-#
-#     # finds the elements in the page with match information
-#     rows = driver.find_element(By.XPATH,
-#                                    "//body[@class='fb']/div[@id='wrap']/div[@id='content']/div[@id='all_sched']"
-#                                    "/div[@id='switcher_sched']/div[@id='div_sched_all']/table[@id='sched_all']"
-#                                    "/tbody")
-#
-#     # extracts match information by iterating over row numbers
-#     for row_num in range(213):
-#         element_finder = "//tr[@data-row='" + str(row_num) + "']"
-#         try:
-#             data = rows.find_element(By.XPATH, element_finder)
-#         except NoSuchElementException:
-#             # this means that all the matches have been extracted
-#             break
-#         # Use the 'data' element as the context for finding sub-elements
-#         try:
-#             # Try to extract the date
-#             date_str = data.find_element(By.XPATH, ".//td[@data-stat='date']").text
-#         except NoSuchElementException:
-#             # If date cannot be found, skip this row
-#             continue
-#         try:
-#             # Use the 'data' element as the context for finding sub-elements
-#             home_team = data.find_element(By.XPATH, ".//td[@data-stat='home_team']/a").text
-#         except NoSuchElementException:
-#             # If home_team cannot be found, skip this row
-#             continue
-#         date = datetime.strptime(date_str, '%Y-%m-%d')
-#         home_xg = data.find_element(By.XPATH, ".//td[@data-stat='home_xg']").text
-#         away_team = data.find_element(By.XPATH, ".//td[@data-stat='away_team']/a").text
-#         away_xg = data.find_element(By.XPATH, ".//td[@data-stat='away_xg']").text
-#         dates.append(date_str)
-#         home_teams.append(home_team)
-#         home_xgs.append(home_xg)
-#         away_teams.append(away_team)
-#         away_xgs.append(away_xg)
-#         leagues.append(comp)
-#         if date_of_last_update >= date > today:
-#             break
-#         else:
-#             print(date, comp, "Match Expected Goals Added")
-#     end_time = time.time()
-#     print(comp, "Update Finished in", round((end_time - season_start_time) / 60, 2), "minutes")
+for comp, comp_code in euro_comp_codes.items():
+    previous_comp_matches = matches[matches['Competition'] == comp]
+    date_of_last_update = previous_comp_matches['Date'].max().date()
+    # gets the url for the season page
+    url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + comp + \
+    '-Scores-and-Fixtures'
+    driver.get(url)
+
+    # waits 10 seconds for the page to load
+    driver.implicitly_wait(10)
+
+    # finds the elements in the page with match information
+    rows = driver.find_element(By.XPATH,
+                                   "//body[@class='fb']/div[@id='wrap']/div[@id='content']/div[@id='all_sched']"
+                                   "/div[@id='switcher_sched']/div[@id='div_sched_all']/table[@id='sched_all']"
+                                   "/tbody")
+
+    # extracts match information by iterating over row numbers
+    for row_num in range(213):
+        element_finder = "//tr[@data-row='" + str(row_num) + "']"
+        data = rows.find_element(By.XPATH, element_finder)
+
+        # Use the 'data' element as the context for finding sub-elements
+        try:
+            # Try to extract the date
+            date_str = data.find_element(By.XPATH, ".//td[@data-stat='date']").text
+        except NoSuchElementException:
+            # If date cannot be found, skip this row
+            continue
+        if date_str != '':
+            date = pd.Timestamp(datetime.strptime(date_str, '%Y-%m-%d')).date()
+            if date > today:
+                break
+            elif date < date_of_last_update:
+                continue
+        else:
+            continue
+        try:
+            # Use the 'data' element as the context for finding sub-elements
+            home_team = data.find_element(By.XPATH, ".//td[@data-stat='home_team']/a").text
+        except NoSuchElementException:
+            # If home_team cannot be found, skip this row
+            continue
+        home_xg = data.find_element(By.XPATH, ".//td[@data-stat='home_xg']").text
+        away_team = data.find_element(By.XPATH, ".//td[@data-stat='away_team']/a").text
+        away_xg = data.find_element(By.XPATH, ".//td[@data-stat='away_xg']").text
+        dates.append(date)
+        home_teams.append(home_team)
+        home_xgs.append(home_xg)
+        away_teams.append(away_team)
+        away_xgs.append(away_xg)
+        leagues.append(comp)
+        print(date, comp, "Match Expected Goals Added")
+    end_time = time.time()
+    print(comp, "Update Finished in", round((end_time - season_start_time) / 60, 2), "minutes")
 
 
 for league, comp_code in league_comp_codes.items():
@@ -136,7 +137,7 @@ for league, comp_code in league_comp_codes.items():
                                    "/tbody")
     print("starting", league)
     # extracts match information by iterating over row numbers
-    for row_num in range(500):
+    for row_num in range(700):
         element_finder = "//tr[@data-row='" + str(row_num) + "']"
         data = rows.find_element(By.XPATH, element_finder)
 
@@ -195,6 +196,7 @@ matches['Date'] = pd.to_datetime(matches['Date'])
 # Drops any Duplicate or NA rows and sorts the rows by date
 matches.drop_duplicates(inplace=True)
 matches.dropna(inplace=True)
+matches.sort_values(by='Date', ascending=True, inplace=True)
 
 # exports to a CSV file
 matches.to_csv('Matches.csv', index=False, header=True)

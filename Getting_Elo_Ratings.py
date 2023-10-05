@@ -40,6 +40,10 @@ matches.dropna(inplace=True)
 # Convert the 'Date' column to datetime format
 matches['Date'] = pd.to_datetime(matches['Date'])
 
+# reads a Data Frame showing the line number last read during web scraping and converts it to a dictionary
+last_row_nums = pd.read_csv("Row_Update.csv")
+last_row_dict = last_row_nums.set_index('Competition')['Last_Row'].to_dict()
+
 # list of codes for each league
 league_comp_codes = {'Premier-League': '9', 'La-Liga': '12', 'Serie-A': '11', 'Ligue-1': '13', 'Bundesliga': '20',
                      'Primeira-Liga': '32', 'Eredivisie': '23', 'Championship': '10'}
@@ -58,6 +62,8 @@ leagues = []
 
 season_start_time = time.time()
 for comp, comp_code in euro_comp_codes.items():
+    # Gets the last row of the last web scrape run
+    starting_row = last_row_dict[comp]
     previous_comp_matches = matches[matches['Competition'] == comp]
     date_of_last_update = previous_comp_matches['Date'].max().date()
     # gets the url for the season page
@@ -75,7 +81,8 @@ for comp, comp_code in euro_comp_codes.items():
                                    "/tbody")
 
     # extracts match information by iterating over row numbers
-    for row_num in range(213):
+    # starts at 15 rows below to account for jumps in rows without match data
+    for row_num in range(starting_row - 15, 213):
         element_finder = "//tr[@data-row='" + str(row_num) + "']"
         data = rows.find_element(By.XPATH, element_finder)
 
@@ -90,8 +97,8 @@ for comp, comp_code in euro_comp_codes.items():
             date = pd.Timestamp(datetime.strptime(date_str, '%Y-%m-%d')).date()
             if date > today:
                 break
-            elif date < date_of_last_update:
-                continue
+            # elif date < date_of_last_update:
+            #     continue
         else:
             continue
         try:
@@ -109,12 +116,16 @@ for comp, comp_code in euro_comp_codes.items():
         away_teams.append(away_team)
         away_xgs.append(away_xg)
         leagues.append(comp)
-        print(date, comp, "Match Expected Goals Added")
+        print(date, comp, home_team, "vs", away_team, "Match Expected Goals Added")
+    # updates the last_row_dict to account for the last row examined in the webscraping
+    last_row_dict[comp] = row_num
     end_time = time.time()
     print(comp, "Update Finished in", round((end_time - season_start_time) / 60, 2), "minutes")
 
 
 for league, comp_code in league_comp_codes.items():
+    # Gets the last row of the last web scrape run
+    starting_row = last_row_dict[league]
     previous_league_matches = matches[matches['Competition'] == league]
     date_of_last_update = previous_league_matches['Date'].max().date()
     start_time = time.time()
@@ -137,7 +148,8 @@ for league, comp_code in league_comp_codes.items():
                                    "/tbody")
     print("starting", league)
     # extracts match information by iterating over row numbers
-    for row_num in range(700):
+    # starts at 15 rows below to account for jumps in rows without match data
+    for row_num in range(starting_row - 15, 700):
         element_finder = "//tr[@data-row='" + str(row_num) + "']"
         data = rows.find_element(By.XPATH, element_finder)
 
@@ -152,8 +164,8 @@ for league, comp_code in league_comp_codes.items():
             date = pd.Timestamp(datetime.strptime(date_str, '%Y-%m-%d')).date()
             if date > today:
                 break
-            elif date < date_of_last_update:
-                continue
+            # elif date < date_of_last_update:
+            #     continue
         else:
             continue
         try:
@@ -171,9 +183,16 @@ for league, comp_code in league_comp_codes.items():
         away_teams.append(away_team)
         away_xgs.append(away_xg)
         leagues.append(league)
-        print(date, league, "Match Expected Goals Added")
+        print(date, league, home_team, "vs", away_team, "Match Expected Goals Added")
+    # updates the last_row_dict to account for the last row examined in the webscraping
+    last_row_dict[league] = row_num
     end_time = time.time()
     print(league, "Season Updated Expected Goals in", round((end_time - start_time) / 60, 2), "minutes")
+
+# Convert the dictionary to a DataFrame
+last_row_df = pd.DataFrame(list(last_row_dict.items()), columns=['Competition', 'Last_Row'])
+last_row_df.to_csv("Row_Update.csv", index=False, header=True)
+
 season_end_time = time.time()
 print("Expected Goals Match Data updated in", round((season_end_time - season_start_time) / 60, 2), "minutes")
 

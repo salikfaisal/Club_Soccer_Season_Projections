@@ -395,7 +395,15 @@ class group_stage:
                              ['Benfica', 'RB Salzburg', 0, 2], ['Feyenoord', 'Celtic', 2, 0],
                              ['Lazio', 'Atlético Madrid', 1, 1], ['Paris Saint-Germain', 'Borussia Dortmund', 2, 0],
                              ['Young Boys', 'RB Leipzig', 1, 3], ['Manchester City', 'Red Star Belgrade', 3, 1],
-                             ['Barcelona', 'Antwerp', 5, 0], ['Shakhtar Donetsk', 'Porto', 1, 3]]
+                             ['Barcelona', 'Antwerp', 5, 0], ['Shakhtar Donetsk', 'Porto', 1, 3],
+                             ['Union Berlin', 'Braga', 2, 3], ['RB Salzburg', 'Real Sociedad', 0, 2],
+                             ['Inter Milan', 'Benfica', 2, 0], ['PSV Eindhoven', 'Sevilla', 2, 2],
+                             ['Copenhagen', 'Bayern Munich', 1, 2], ['Manchester United', 'Galatasaray', 2, 3],
+                             ['Napoli', 'Real Madrid', 2, 3], ['Lens', 'Arsenal', 2, 1],
+                             ['Atlético Madrid', 'Feyenoord', 3, 2], ['Antwerp', 'Shakhtar Donetsk', 2, 3],
+                             ['Red Star Belgrade', 'Young Boys', 2, 2], ['Borussia Dortmund', 'AC Milan', 0, 0],
+                             ['Newcastle United', 'Paris Saint-Germain', 4, 1], ['RB Leipzig', 'Manchester City', 1, 3],
+                             ['Porto', 'Barcelona', 0, 1], ['Celtic', 'Lazio', 1, 2]]
         # [Home, Away, Home Goals, Away Goals]
         return matches_completed
 

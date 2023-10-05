@@ -18,7 +18,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Augsburg': 'FC Augsburg', 'Hertha': 'Hertha BSC', 'Bielefeld': 'Arminia Bielefeld',
                     'Bochum': 'VfL Bochum', 'Dortmund': 'Borussia Dortmund', 'Frankfurt': 'Eintracht Frankfurt',
                     'Freiburg': 'SC Freiburg', 'Fürth': 'Greuther Fürth', 'Fuerth': 'Greuther Fürth',
-                    'Hoffenheim': '1899 Hoffenheim', 'Köln': '1. FC Köln', 'Koeln': '1. FC Köln',
+                    'Hoffenheim': 'TSG Hoffenheim', 'Köln': '1. FC Köln', 'Koeln': '1. FC Köln',
                     'Leverkusen': 'Bayer Leverkusen', 'Mainz': 'Mainz 05', 'Gladbach': 'Borussia Mönchengladbach',
                     'Bayern': 'Bayern Munich', 'Stuttgart': 'VfB Stuttgart', 'Wolfsburg': 'VfL Wolfsburg',
                     'Darmstadt': 'Darmstadt 98', 'Heidenheim': '1. FC Heidenheim', 'Hamburg': 'Hamburger SV',
@@ -100,7 +100,7 @@ football_transfers_name_changes = {'Milan': 'AC Milan', 'Atlético de Madrid': '
                                    'Zaglebie Lubin': 'Zagłębie Lubin', 'Odense Boldklub': 'OB', 'AZ Alkmaar': 'AZ',
                                    'Heerenveen': 'SC Heerenveen', 'Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
                                    'Waalwijk': 'RKC Waalwijk', 'Nordsjaelland': 'Nordsjælland',
-                                   'Pogon Szczecin': 'Pogoń Szczecin'
+                                   'Pogon Szczecin': 'Pogoń Szczecin', '1899 Hoffenheim': 'TSG Hoffenheim'
                                    }
 # changes the name of Clubs on the WikiTable
 wiki_name_changes = {'Paris SG': 'Paris Saint-Germain'}
@@ -108,7 +108,7 @@ wiki_name_changes = {'Paris SG': 'Paris Saint-Germain'}
 # changes the name of clubs on the Football Reference website
 fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton & Hove Albion',
                       'Newcastle Utd': 'Newcastle United', 'Manchester Utd': 'Manchester United',
-                      'Wolfsburg': 'VfL Wolfsburg', 'Hoffenheim': '1899 Hoffenheim', 'Inter': 'Inter Milan',
+                      'Wolfsburg': 'VfL Wolfsburg', 'Hoffenheim': 'TSG Hoffenheim', 'Inter': 'Inter Milan',
                       'Freiburg': 'SC Freiburg', "M'Gladbach": 'Borussia Mönchengladbach',
                       'La Coruña': 'Deportivo La Coruña', 'Athletic Club': 'Athletic Bilbao',
                       'Tottenham': 'Tottenham Hotspur', 'Köln': '1. FC Köln', 'Betis': 'Real Betis',

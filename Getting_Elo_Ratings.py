@@ -326,7 +326,7 @@ for idx, match in matches.iterrows():
     change_in_elo = 0
     for gd, prob in gd_probabilities.items():
         if gd < 0:
-            change_in_elo += (0 - home_we) * 20 * math.pow(abs(gd), 0.25) * prob / loss_pts_exchange_den\
+            change_in_elo += (0 - home_we) * 20 * math.sqrt(abs(gd)) * prob / loss_pts_exchange_den\
                              * math.sqrt(abs(gd))
         elif gd == 0:
             change_in_elo += (0.5 - home_we) * 20 * prob

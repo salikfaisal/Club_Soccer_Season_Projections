@@ -79,7 +79,7 @@ for comp, comp_code in euro_comp_codes.items():
                                    "//body[@class='fb']/div[@id='wrap']/div[@id='content']/div[@id='all_sched']"
                                    "/div[@id='switcher_sched']/div[@id='div_sched_all']/table[@id='sched_all']"
                                    "/tbody")
-
+    print("starting", comp)
     # extracts match information by iterating over row numbers
     # starts at 15 rows below to account for jumps in rows without match data
     for row_num in range(starting_row - 15, 213):

@@ -404,14 +404,30 @@ class group_stage:
                              ['Red Star Belgrade', 'Young Boys', 2, 2], ['Borussia Dortmund', 'AC Milan', 0, 0],
                              ['Newcastle United', 'Paris Saint-Germain', 4, 1], ['RB Leipzig', 'Manchester City', 1, 3],
                              ['Porto', 'Barcelona', 0, 1], ['Celtic', 'Lazio', 1, 2],
-                             ['Galatasaray', 'Bayern Munich', 1, 3], ['Union Berlin', 'Napoli', 0, 1],
-                             ['Sevilla', 'Arsenal', 1, 2], ['Braga', 'Real Madrid', 1, 2],
-                             ['Lens', 'PSV Eindhoven', 1, 1], ['Benfica', 'Real Sociedad', 0, 1],
-                             ['Manchester United', 'Copenhagen', 1, 0], ['Barcelona', 'Shakhtar Donetsk', 2, 1],
-                             ['Feyenoord', 'Lazio', 3, 1], ['Newcastle United', 'Borussia Dortmund', 0, 1],
-                             ['RB Leipzig', 'Red Star Belgrade', 3, 1], ['Young Boys', 'Manchester City', 1, 3],
-                             ['Paris Saint-Germain', 'AC Milan', 3, 0], ['Celtic', 'Atlético Madrid', 2, 2],
-                             ['Antwerp', 'Porto', 1, 4]]
+                             ['Galatasaray', 'Bayern Munich', 1, 3], ['Inter Milan', 'RB Salzburg', 2, 1],
+                             ['Union Berlin', 'Napoli', 0, 1], ['Sevilla', 'Arsenal', 1, 2],
+                             ['Braga', 'Real Madrid', 1, 2], ['Lens', 'PSV Eindhoven', 1, 1],
+                             ['Benfica', 'Real Sociedad', 0, 1], ['Manchester United', 'Copenhagen', 1, 0],
+                             ['Barcelona', 'Shakhtar Donetsk', 2, 1], ['Feyenoord', 'Lazio', 3, 1],
+                             ['Newcastle United', 'Borussia Dortmund', 0, 1], ['RB Leipzig', 'Red Star Belgrade', 3, 1],
+                             ['Young Boys', 'Manchester City', 1, 3], ['Paris Saint-Germain', 'AC Milan', 3, 0],
+                             ['Celtic', 'Atlético Madrid', 2, 2], ['Antwerp', 'Porto', 1, 4],
+                             ['Borussia Dortmund', 'Newcastle United', 2, 0], ['Shakhtar Donetsk', 'Barcelona', 1, 0],
+                             ['Lazio', 'Feyenoord', 1, 0], ['Porto', 'Antwerp', 2, 0],
+                             ['Manchester City', 'Young Boys', 3, 0], ['AC Milan', 'Paris Saint-Germain', 2, 1],
+                             ['Atlético Madrid', 'Celtic', 6, 0], ['Red Star Belgrade', 'RB Leipzig', 1, 2],
+                             ['Real Sociedad', 'Benfica', 3, 1], ['Napoli', 'Union Berlin', 1, 1],
+                             ['Copenhagen', 'Manchester United', 4, 3], ['RB Salzburg', 'Inter Milan', 0, 1],
+                             ['Bayern Munich', 'Galatasaray', 2, 1], ['Arsenal', 'Sevilla', 2, 0],
+                             ['PSV Eindhoven', 'Lens', 1, 0], ['Real Madrid', 'Braga', 3, 0], ['Lazio', 'Celtic', 2, 0],
+                             ['Shakhtar Donetsk', 'Antwerp', 1, 0], ['AC Milan', 'Borussia Dortmund', 1, 3],
+                             ['Feyenoord', 'Atlético Madrid', 1, 3], ['Paris Saint-Germain', 'Newcastle United', 1, 1],
+                             ['Barcelona', 'Porto', 2, 1], ['Young Boys', 'Red Star Belgrade', 2, 0],
+                             ['Manchester City', 'RB Leipzig', 3, 2], ['Galatasaray', 'Manchester United', 3, 3],
+                             ['Sevilla', 'PSV Eindhoven', 2, 3], ['Bayern Munich', 'Copenhagen', 0, 0],
+                             ['Real Madrid', 'Napoli', 4, 2], ['Real Sociedad', 'RB Salzburg', 0, 0],
+                             ['Braga', 'Union Berlin', 1, 1], ['Arsenal', 'Lens', 6, 0],
+                             ['Benfica', 'Inter Milan', 3, 3]]
         # [Home, Away, Home Goals, Away Goals]
         return matches_completed
 
@@ -743,20 +759,20 @@ for simulation in range(10000):
                 group_winners.append(team[0])
             elif position == 1:
                 group_runners_up.append(team[0])
-    # # Checks to see if games registered when inputted
-    # # Set to not run. Should be used occasionally to find errors in inputs
-    # if simulation == 0:
-    #     completed_matches_dict = {}
-    #     for club in group_summary:
-    #         completed_matches_dict.update({club: 0})
-    #     completed_matches = group_sim.matches_completed()
-    #     for match in completed_matches:
-    #         home_team = match[0]
-    #         away_team = match[1]
-    #         completed_matches_dict.update({home_team: completed_matches_dict[home_team] + 1})
-    #         completed_matches_dict.update({away_team: completed_matches_dict[away_team] + 1})
-    #     for club, matches_played in completed_matches_dict.items():
-    #         print(club, matches_played)
+    # Checks to see if games registered when inputted
+    # Set to not run. Should be used occasionally to find errors in inputs
+    if simulation == 0:
+        completed_matches_dict = {}
+        for club in group_summary:
+            completed_matches_dict.update({club: 0})
+        completed_matches = group_sim.matches_completed()
+        for match in completed_matches:
+            home_team = match[0]
+            away_team = match[1]
+            completed_matches_dict.update({home_team: completed_matches_dict[home_team] + 1})
+            completed_matches_dict.update({away_team: completed_matches_dict[away_team] + 1})
+        for club, matches_played in completed_matches_dict.items():
+            print(club, matches_played)
     ks_sim = knockout_stage(group_winners, group_runners_up)
     # Simulates Knockout Stage
     quarterfinalists, semifinalists, finalists, champion = ks_sim.champions_league_final()

@@ -100,7 +100,10 @@ football_transfers_name_changes = {'Milan': 'AC Milan', 'Atlético de Madrid': '
                                    'Zaglebie Lubin': 'Zagłębie Lubin', 'Odense Boldklub': 'OB', 'AZ Alkmaar': 'AZ',
                                    'Heerenveen': 'SC Heerenveen', 'Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
                                    'Waalwijk': 'RKC Waalwijk', 'Nordsjaelland': 'Nordsjælland',
-                                   'Pogon Szczecin': 'Pogoń Szczecin', '1899 Hoffenheim': 'TSG Hoffenheim'
+                                   'Pogon Szczecin': 'Pogoń Szczecin', '1899 Hoffenheim': 'TSG Hoffenheim',
+                                   'Tottenham': 'Tottenham Hotspur', 'Wolves': 'Wolverhampton Wanderers',
+                                   "Gladbach": 'Borussia Mönchengladbach', 'Preston': 'Preston North End',
+                                   'Sheff Wed': 'Sheffield Wednesday'
                                    }
 # changes the name of Clubs on the WikiTable
 wiki_name_changes = {'Paris SG': 'Paris Saint-Germain'}

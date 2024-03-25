@@ -15,6 +15,7 @@ elo_df = Getting_Elo_Ratings.grand_elo_df
 country_code_to_league = {'ENG': 'Premier_League', 'GER': 'Bundesliga', 'ITA': 'Serie_A', 'ESP': 'La_Liga',
                           'FRA': 'Ligue_1', 'NED': 'Eredivisie', 'POR': 'Primeira_Liga'}
 
+
 # This function returns a Data Frame of league results so far in the season for the country_code in the parameters
 def get_league_results_so_far(country_code):
     # gets specific league information to help with later parts of the function
@@ -70,6 +71,9 @@ def get_league_results_so_far(country_code):
         # Everton were deducted 10 points for the 2023-24 season
         if club == 'Everton':
             current_table.update({club: [0, 0, 0, -10]})
+        # Nottingham Forest were deducted 10 points for the 2023-24 season
+        elif club == 'Nottingham Forest':
+            current_table.update({club: [0, 0, 0, -4]})
         else:
             current_table.update({club: [0, 0, 0, 0]})
     # These variables assist in locating "column" numbers
@@ -104,6 +108,7 @@ def get_league_results_so_far(country_code):
 
     return results_df, current_table, future_matches
 
+
 start_time = time.time()
 # this dictionary retrieves the home field advantage that will be added to each elo rating for a home side in a given
 # country
@@ -127,6 +132,7 @@ for country_code in country_codes:
     home_field_advantage_dict.update({country_code: float(home_field_advantage)})
 end_time = time.time()
 print("Determined UEFA Home Field Advantages in", round((end_time - start_time) / 60, 2), "minutes")
+
 
 # this function helps sort the league table dictionary
 def sort_table_dict(item):
@@ -204,6 +210,7 @@ def head_to_head_tiebreaker(league_table, results):
         final_table.update({club: league_table[club]})
 
     return final_table
+
 
 def league_simulations(country_code):
     start_time = time.time()
@@ -328,6 +335,7 @@ def league_simulations(country_code):
 
     return summary_table
 
+
 leagues = {'ENG': 'Premier League (England)', 'ESP': 'La Liga (Spain)', 'ITA': 'Serie A (Italy)',
            'GER': 'Bundesliga (Germany)', 'FRA': 'Ligue 1 (France)', 'NED': 'Eredivisie (Netherlands)',
            'POR': 'Primeira Liga (Portugal)'}
@@ -335,8 +343,8 @@ league_csv_name = {'ENG': 'Premier_League_Expected_Results.csv', 'ESP': 'La_Liga
                    'ITA': 'Serie_A_Expected_Results.csv', 'GER': 'Bundesliga_Expected_Results.csv',
                    'FRA': 'Ligue_1_Expected_Results.csv', 'NED': 'Eredivisie_Expected_Results.csv',
                    'POR': 'Primeira_Liga_Expected_Results.csv'}
-line_format = '{pos:^4}|{club:^25}|{Avg_Pos:^10}|{GD:^10}|{Pts:^10}|{UCL:^10}|{W:^12}'
-league_name_format = '{league:^89}'
+line_format = '{pos:^4}|{club:^25}|{Avg_Pos:^10}|{GD:^10}|{Pts:^10}|{UCL:^10}|{W:^12}|'
+league_name_format = '{league:^88}'
 for code, league in leagues.items():
     start_time = time.time()
     league_df = league_simulations(code)
@@ -348,7 +356,7 @@ for code, league in leagues.items():
     print(league_name_format.format(league=league))
     print(line_format.format(pos='Pos', club='Team', Avg_Pos='Avg. Pos', GD='Avg. GD', Pts='Avg. Pts', UCL='Make UCL',
                              W='Win League'))
-    print('-' * 89)
+    print('-' * 88)
     for position, data in league_df.iterrows():
         average_pos = str(round(data['Avg_Pos'], 1))
         average_gd = str(round(data['Avg_GD']))
@@ -382,7 +390,6 @@ for group_number, group in enumerate(groups):
         elo = elo_df.loc[team]["Adjusted_Elo_Rating"]
         ucl_elos.update({team: elo})
         ucl_country_codes.update({team: country})
-
 
 
 # A class for functions used for the Group Stage
@@ -426,7 +433,7 @@ class group_stage:
                              ['PSV Eindhoven', 'Lens', 1, 0], ['Real Madrid', 'Braga', 3, 0], ['Lazio', 'Celtic', 2, 0],
                              ['Shakhtar Donetsk', 'Antwerp', 1, 0], ['AC Milan', 'Borussia Dortmund', 1, 3],
                              ['Feyenoord', 'Atlético Madrid', 1, 3], ['Paris Saint-Germain', 'Newcastle United', 1, 1],
-                             ['Barcelona',  'Porto', 2, 1], ['Young Boys', 'Red Star Belgrade', 2, 0],
+                             ['Barcelona', 'Porto', 2, 1], ['Young Boys', 'Red Star Belgrade', 2, 0],
                              ['Manchester City', 'RB Leipzig', 3, 2], ['Galatasaray', 'Manchester United', 3, 3],
                              ['Sevilla', 'PSV Eindhoven', 2, 3], ['Bayern Munich', 'Copenhagen', 0, 0],
                              ['Real Madrid', 'Napoli', 4, 2], ['Real Sociedad', 'RB Salzburg', 0, 0],
@@ -567,10 +574,10 @@ class group_stage:
 class knockout_stage:
     # This sets the matchups for the knockout stage based on the results of the Group Stage
     def __init__(self, group_winners, group_runners_up):
-        round_of_16_matchups = [['Manchester City', 'Copenhagen'], ['Real Madrid', 'RB Leipzig'],
-                                ['Paris Saint-Germain', 'Real Sociedad'], ['Bayern Munich', 'Lazio'],
-                                ['PSV Eindhoven', 'Borussia Dortmund'], ['Inter Milan', 'Atlético Madrid'],
-                                ['Porto', 'Arsenal'], ['Napoli', 'Barcelona']]
+        round_of_16_matchups = [['Porto', 'Arsenal'], ['Napoli', 'Barcelona'], ['Paris Saint-Germain', 'Real Sociedad'],
+                                ['Inter Milan', 'Atlético Madrid'], ['PSV Eindhoven', 'Borussia Dortmund'],
+                                ['Lazio', 'Bayern Munich'], ['Copenhagen', 'Manchester City'],
+                                ['RB Leipzig', 'Real Madrid']]
         if len(round_of_16_matchups) == 0:
             # this indicates the draw has not occurred yet
             # pot 1 consists of the group runners-up and pot 2 consists of the group winners
@@ -614,13 +621,19 @@ class knockout_stage:
     def round_of_16(self):
         r16_matchups = self.round_of_16_matchups
         quarterfinalists = []
-        # if completed it will be in the format of fist_leg = [['Inter Milan' , 'Liverpool', 0, 2], []]
+        # if completed it will be in the format of first_leg = [['Inter Milan' , 'Liverpool', 0, 2], []]
         # in the order of the r_16_matchups list
-        first_legs_completed = False
-        second_legs_completed = False
-        first_legs = []
+        first_legs_completed = True
+        second_legs_completed = True
+        first_legs = [['Porto', 'Arsenal', 1, 0], ['Napoli', 'Barcelona', 1, 1],
+                      ['Paris Saint-Germain', 'Real Sociedad', 2, 0], ['Inter Milan', 'Atlético Madrid', 1, 0],
+                      ['PSV Eindhoven', 'Borussia Dortmund', 1, 1], ['Lazio', 'Bayern Munich', 1, 0],
+                      ['Copenhagen', 'Manchester City', 1, 3], ['RB Leipzig', 'Real Madrid', 0, 1]]
         # the home side for the first leg will be first in the second_leg list
-        second_legs = []
+        second_legs = [['Porto', 'Arsenal', 0, 1], ['Napoli', 'Barcelona', 1, 3],
+                      ['Paris Saint-Germain', 'Real Sociedad', 2, 1], ['Inter Milan', 'Atlético Madrid', 1, 2],
+                      ['PSV Eindhoven', 'Borussia Dortmund', 0, 2], ['Lazio', 'Bayern Munich', 0, 3],
+                      ['Copenhagen', 'Manchester City', 1, 3], ['RB Leipzig', 'Real Madrid', 1, 1]]
         for matchup_number, matchup in enumerate(r16_matchups):
             team_1 = matchup[0]
             team_2 = matchup[1]
@@ -644,7 +657,9 @@ class knockout_stage:
                 quarterfinalists.append(matchup[1])
             else:
                 quarterfinalists.append(matchup[random.randrange(0, 2)])
-        return quarterfinalists
+        # return quarterfinalists
+        return ['Atlético Madrid', 'Borussia Dortmund', 'Paris Saint-Germain', 'Barcelona', 'Arsenal', 'Bayern Munich',
+                'Real Madrid', 'Manchester City']
 
     # This returns the clubs that advanced to the quarterfinals and semifinals through simulations or returns the
     # actual quarterfinalists add semifinalists if the matches have been completed
@@ -652,8 +667,9 @@ class knockout_stage:
         quarterfinalists = self.round_of_16()
         semifinalists = []
         # if completed it will be in the format of first_leg = [['Inter Milan' , 'Liverpool', 0, 2], []] in the order
-        # of the r_16_matchups list
-        qf_matchups = []
+        # of the qf_matchups list
+        qf_matchups = [['Atlético Madrid', 'Borussia Dortmund'], ['Paris Saint-Germain', 'Barcelona'],
+                       ['Arsenal', 'Bayern Munich'], ['Real Madrid', 'Manchester City']]
         if len(qf_matchups) == 0:
             # this means the quarterfinals draw hasn't occurred yet
             random.shuffle(quarterfinalists)
@@ -814,7 +830,7 @@ for simulation in range(10000):
         elif team[0] in group_winners or team[0] in group_runners_up:
             team[1] += 1
 end_time = time.time()
-print("UEFA Champions League Simulated 10,000 Times in", round((end_time - start_time) / 60, 2), "minutes")
+print("\nUEFA Champions League Simulated 10,000 Times in", round((end_time - start_time) / 60, 2), "minutes")
 
 group_sim_summary = []
 for team, data in group_summary.items():
@@ -826,7 +842,7 @@ group_sim_summary = sorted(group_sim_summary, key=lambda data: data[7])
 ucl_summary = sorted(ucl_summary, key=lambda data: (data[5], data[4], data[3], data[2], data[1]), reverse=True)
 
 line_format = '{pos:^4}|{team:^25}|{Pts:^15}|{GD:^15}|{KS:^10}|{First:^7}|{Second:^7}|{Third:^7}|{Fourth:^7}|'
-group_format = '{group:^105}'
+group_format = '{group:^106}'
 
 for team_number, team_stats in enumerate(group_sim_summary):
     if team_number % 4 == 0:
@@ -835,7 +851,7 @@ for team_number, team_stats in enumerate(group_sim_summary):
         print(group_format.format(group=group))
         print(line_format.format(pos='Pos', team='Team', Pts='Est. Points', GD='Est. GD', KS='Advance', First='1st',
                                  Second='2nd', Third='3rd', Fourth='4th'))
-        print('-' * 105)
+        print('-' * 106)
     position = team_number % 4 + 1
     team = team_stats[0]
     points = round(team_stats[1] / 10000, 2)
@@ -852,13 +868,13 @@ for team_number, team_stats in enumerate(group_sim_summary):
 print()
 print()
 # line_format = '{Pos:^4}|{team:^25}|{R16:^15}|{QF:^18}|{SF:^12}|{F:^10}|{W:^25}|'
-line_format = '{Pos:^4}|{team:^25}|{QF:^18}|{SF:^12}|{F:^10}|{W:^25}|'
-ucl_format = '{title:^101}'
+line_format = '{Pos:^4}|{team:^25}|{SF:^12}|{F:^10}|{W:^25}|'
+ucl_format = '{title:^81}'
 print(ucl_format.format(title='2022-23 UEFA Champions League Forecast'))
 print()
 print(line_format.format(Pos='Pos', team='Team', QF='Quarterfinals', SF='Semifinals', F='Final',
                          W='Win Champions League'))
-print('-' * 101)
+print('-' * 81)
 for rank, team_stats in enumerate(ucl_summary):
     team = team_stats[0]
     make_r16 = str(round(team_stats[1] / 100)) + '%'

@@ -68,7 +68,7 @@ for comp, comp_code in euro_comp_codes.items():
     date_of_last_update = previous_comp_matches['Date'].max().date()
     # gets the url for the season page
     url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + comp + \
-    '-Scores-and-Fixtures'
+          '-Scores-and-Fixtures'
     driver.get(url)
 
     # waits 10 seconds for the page to load
@@ -76,9 +76,9 @@ for comp, comp_code in euro_comp_codes.items():
 
     # finds the elements in the page with match information
     rows = driver.find_element(By.XPATH,
-                                   "//body[@class='fb']/div[@id='wrap']/div[@id='content']/div[@id='all_sched']"
-                                   "/div[@id='switcher_sched']/div[@id='div_sched_all']/table[@id='sched_all']"
-                                   "/tbody")
+                               "//body[@class='fb']/div[@id='wrap']/div[@id='content']/div[@id='all_sched']"
+                               "/div[@id='switcher_sched']/div[@id='div_sched_all']/table[@id='sched_all']"
+                               "/tbody")
     print("starting", comp)
     # extracts match information by iterating over row numbers
     # starts at 15 rows below to account for jumps in rows without match data
@@ -122,25 +122,24 @@ for comp, comp_code in euro_comp_codes.items():
     end_time = time.time()
     print(comp, "Update Finished in", round((end_time - season_start_time) / 60, 2), "minutes")
 
-
 for league, comp_code in league_comp_codes.items():
     # Gets the last row of the last web scrape run
     starting_row = last_row_dict[league]
     previous_league_matches = matches[matches['Competition'] == league]
     date_of_last_update = previous_league_matches['Date'].max().date()
     start_time = time.time()
-    url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + league +\
-    '-Scores-and-Fixtures'
+    url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + league + \
+          '-Scores-and-Fixtures'
     driver.get(url)
 
     # waits 10 seconds for the page to load
     driver.implicitly_wait(10)
     try:
         rows = driver.find_element(By.XPATH, "//body[@class='fb']/div[@id='wrap']/div[@id='content']"
-                                            "/div[@id='all_sched']"
-                                                 "/div[@id='div_sched_2023-2024_" + comp_code + "_1']"
-                                                 "/table[@id='sched_2023-2024_" + comp_code + "_1']"
-                                                 "/tbody")
+                                             "/div[@id='all_sched']"
+                                             "/div[@id='div_sched_2023-2024_" + comp_code + "_1']"
+                                                                                            "/table[@id='sched_2023-2024_" + comp_code + "_1']"
+                                                                                                                                         "/tbody")
     except NoSuchElementException:
         rows = driver.find_element(By.XPATH,
                                    "//body[@class='fb']/div[@id='wrap']/div[@id='content']/div[@id='all_sched']"
@@ -195,7 +194,6 @@ last_row_df.to_csv("Row_Update.csv", index=False, header=True)
 
 season_end_time = time.time()
 print("Expected Goals Match Data updated in", round((season_end_time - season_start_time) / 60, 2), "minutes")
-
 
 # creates a Data Frame of Expected Goals Data for All Leagues until the end of the 2022-23 Season and exports it
 # to a CSV file
@@ -326,7 +324,7 @@ for idx, match in matches.iterrows():
     change_in_elo = 0
     for gd, prob in gd_probabilities.items():
         if gd < 0:
-            change_in_elo += (0 - home_we) * 20 * math.sqrt(abs(gd)) * prob / loss_pts_exchange_den\
+            change_in_elo += (0 - home_we) * 20 * math.sqrt(abs(gd)) * prob / loss_pts_exchange_den \
                              * math.sqrt(abs(gd))
         elif gd == 0:
             change_in_elo += (0.5 - home_we) * 20 * prob
@@ -349,7 +347,6 @@ for idx, match in matches.iterrows():
 end_time = time.time()
 print("Extracted Elo Ratings for Clubs Based on Expected Goals in", round((end_time - start_time) / 60, 2), "minutes")
 
-
 # Leagues that have 0 teams in any UEFA Club Competitions or will not be modeled
 leagues_of_non_interest = ['Serie B', '2. Bundesliga', 'Ligue 2', 'LaLiga 2 (Segunda División)',
                            'Keuken Kampioen Divisie', 'League One', 'Challenger Pro League', 'Serie C - Girone C',
@@ -369,14 +366,14 @@ for page_num in range(1, 13):
     driver.implicitly_wait(10)
 
     # Find all matching <tr> elements using the XPath expression
-    rows = driver.find_elements(By.XPATH, "//section[@id='layout']/main[@id='content-part']"
+    rows = driver.find_elements(By.XPATH, "//section[@id='template']"
+                                          "/section[@id='layout']/main[@id='content-part']"
                                           "/section[@class='main-bar mainarticle-bar5']"
                                           "/div[@class='container relative']"
                                           "/div[@class='row']/div[@class='column-left']/div[@class='bg-white']"
-                                          "/div[@class='main-article ']"
+                                          "/div[@class='main-article auto-placeholder-table']"
                                           "/table[@class='table table-striped table-hover ft-table team-overview-table mb-0']"
                                           "/tbody[@id='player-table-body']/tr")
-
     # Iterate over each <tr> element and print its text content
     for row in rows:
         # extracts key data for each Club
@@ -423,16 +420,16 @@ print("Examined Club Transfer Values in", round((end_time - start_time) / 60, 2)
 
 transfer_value_df = pd.DataFrame({'Club': clubs, 'League': leagues, 'Rating': ratings})
 
-
 transfer_value_df = elo_ratings_df.merge(transfer_value_df, on='Club')
-
 
 # Calculate z-score for the 'Rating' column
 z_score = (transfer_value_df['Rating'] - transfer_value_df['Rating'].mean()) / transfer_value_df['Rating'].std()
 
+
 # Define a function to estimate 'Elo' based on z-score
 def estimate_elo(z_score, mean_elo, std_elo):
     return mean_elo + z_score * std_elo
+
 
 # Mean and standard deviation of 'Elo' column
 mean_elo = elo_ratings_df['Elo'].mean()
@@ -449,6 +446,7 @@ merged_df = elo_ratings_df.merge(xg_elo_ratings_df[["Club", "XG Elo"]], on='Club
 
 # Merge the merged_df with transfer_value_df using a left join
 grand_elo_df = merged_df.merge(transfer_value_df[["Club", "Transfer_Elo"]], on='Club', how='left')
+
 
 def calculate_combined_elo_rating(row):
     original_elo = row["Elo"]
@@ -467,4 +465,8 @@ def calculate_combined_elo_rating(row):
 grand_elo_df['Adjusted_Elo_Rating'] = grand_elo_df.apply(calculate_combined_elo_rating, axis=1)
 
 grand_elo_df.sort_values(by='Adjusted_Elo_Rating', ascending=False, inplace=True)
+grand_elo_df.reset_index(inplace=True)
+grand_elo_df['Rank'] = grand_elo_df.index + 1
+grand_elo_df.drop(columns=["From", "To", "index"], inplace=True)
+grand_elo_df.to_csv("Elo Ratings for European Clubs.csv", index=False, header=True)
 grand_elo_df.set_index("Club", inplace=True)

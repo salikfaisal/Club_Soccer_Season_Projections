@@ -6,7 +6,7 @@ Club_Soccer_Season_Projections utilizes Expected Goals (xG) data and squad quali
 
 Each league's summary includes estimated final positions, points, goal differences, title chances, chances of qualifying for the UEFA Champions League, and relegation possibilities.
 
-These simulations are calculated using a combination of actual league results and simulated matches based on Elo ratings. Elo Ratings are weighted based on three different metrics, as shown in the following table:
+These simulations are calculated using a combination of actual league results and simulated matches based on [Elo ratings](https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/Elo%20Ratings%20for%20European%20Clubs.csv). Elo Ratings are weighted based on three different metrics, as shown in the following table:
 
 | Weight | Short Description         | Long Description                                                                                                                   |
 | ------ | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |

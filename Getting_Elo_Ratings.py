@@ -67,12 +67,15 @@ for comp, comp_code in euro_comp_codes.items():
     previous_comp_matches = matches[matches['Competition'] == comp]
     date_of_last_update = previous_comp_matches['Date'].max().date()
     # gets the url for the season page
+    print("Getting URL")
     url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + comp + \
           '-Scores-and-Fixtures'
     driver.get(url)
+    print("Got URL. Implicit Wait Begins")
 
     # waits 10 seconds for the page to load
     driver.implicitly_wait(10)
+    print("Implicit Wait Finished")
 
     # finds the elements in the page with match information
     rows = driver.find_element(By.XPATH,
@@ -128,12 +131,15 @@ for league, comp_code in league_comp_codes.items():
     previous_league_matches = matches[matches['Competition'] == league]
     date_of_last_update = previous_league_matches['Date'].max().date()
     start_time = time.time()
+    print("Getting URL")
     url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + league + \
           '-Scores-and-Fixtures'
     driver.get(url)
+    print("Got URL. Implicit Wait Begins")
 
     # waits 10 seconds for the page to load
     driver.implicitly_wait(10)
+    print("Implicit Wait Finished")
     try:
         rows = driver.find_element(By.XPATH, "//body[@class='fb']/div[@id='wrap']/div[@id='content']"
                                              "/div[@id='all_sched']"

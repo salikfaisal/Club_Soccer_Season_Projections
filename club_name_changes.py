@@ -39,7 +39,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'FK Astana': 'Astana', 'Razgrad': 'Ludogorets Razgrad', 'M Tel Aviv': 'Maccabi Tel Aviv',
                     'Ostersund': 'Östersunds FK', 'Skenderbeu': 'Skënderbeu', 'BATE': 'BATE Borisov',
                     'Setubal': 'Vitória de Setúbal', 'Den Haag': 'ADO Den Haag', 'Maritimo': 'Marítimo',
-                    'Alkmaar': 'AZ', 'Heracles': 'Heracles Almelo', 'Venlo': 'VVV-Venlo', 'Breda': 'NAC Breda',
+                    'Alkmaar': 'AZ', 'Heracles Almelo': 'Heracles', 'Venlo': 'VVV-Venlo', 'Breda': 'NAC Breda',
                     'Belenenses': 'B-SAD', 'Fenerbahce': 'Fenerbahçe', 'Akhisar': 'Akhisarspor',
                     'Dudelange': 'F91 Dudelange', 'Videoton': 'Fehérvár', 'Larnaca': 'AEK Larnaca',
                     'Standard': 'Standard Liège', 'Zuerich': 'Zürich', 'Sarpsborg': 'Sarpsborg 08',
@@ -58,7 +58,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Bodoe Glimt': 'Bodø/Glimt', 'Valerenga': 'Vålerenga', 'Rackow': 'Raków Częstochowa',
                     'Lubin': 'Zagłębie Lubin', 'Odense': 'OB', 'Hajduk': 'Hajduk Split', 'Dnipro': 'Dnipro-1',
                     'Hearts': 'Heart of Midlothian', 'StGallen': 'St. Gallen', 'Rakow': 'Raków Częstochowa',
-                    'Estrela Amadora': 'Estrela da Amadora', 'Heerenveen': 'SC Heerenveen', 'Nijmegen': 'NEC', 'Zwolle':
+                    'Estrela Amadora': 'Estrela da Amadora', 'Nijmegen': 'NEC', 'Zwolle':
                     'PEC Zwolle', 'Waalwijk': 'RKC Waalwijk', 'Backa Topola': 'TSC', 'Dunajska': 'DAC Dunajská Streda',
                     'Klaksvik': 'KÍ', 'Breidablik': 'Breiðablik', 'Nordsjaelland': 'Nordsjælland',
                     'Pogon': 'Pogoń Szczecin', 'Lillestrom': 'Lillestrøm'
@@ -98,12 +98,12 @@ football_transfers_name_changes = {'Milan': 'AC Milan', 'Atlético de Madrid': '
                                    'Zorya Lugansk': 'Zorya Luhansk', 'Vålerenga Fotball': 'Vålerenga',
                                    'Rapid Vienna': 'Rapid Wien', 'Sepsi OSK Sf. Gheorghe': 'Sepsi OSK',
                                    'Zaglebie Lubin': 'Zagłębie Lubin', 'Odense Boldklub': 'OB', 'AZ Alkmaar': 'AZ',
-                                   'Heerenveen': 'SC Heerenveen', 'Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
+                                   'Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
                                    'Waalwijk': 'RKC Waalwijk', 'Nordsjaelland': 'Nordsjælland',
                                    'Pogon Szczecin': 'Pogoń Szczecin', '1899 Hoffenheim': 'TSG Hoffenheim',
                                    'Tottenham': 'Tottenham Hotspur', 'Wolves': 'Wolverhampton Wanderers',
                                    "Gladbach": 'Borussia Mönchengladbach', 'Preston': 'Preston North End',
-                                   'Sheff Wed': 'Sheffield Wednesday'
+                                   'Sheff Wed': 'Sheffield Wednesday', 'Heracles Almelo': 'Heracles'
                                    }
 # changes the name of Clubs on the WikiTable
 wiki_name_changes = {'Paris SG': 'Paris Saint-Germain'}
@@ -140,10 +140,10 @@ fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton 
                       'Preston': 'Preston North End', 'Sheffield Weds': 'Sheffield Wednesday',
                       'QPR': 'Queens Park Rangers', 'Hearts': 'Heart of Midlothian', 'Vidi': 'Fehérvár',
                       'Estrela': 'Estrela da Amadora', 'Heidenheim': '1. FC Heidenheim', 'AZ Alkmaar': 'AZ',
-                      'Heerenveen': 'SC Heerenveen', 'NEC Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle',
-                      'Waalwijk': 'RKC Waalwijk', 'Olimpija': 'Olimpija Ljubljana', 'TSC Bačka Top': 'TSC',
+                      'NEC Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle', 'Waalwijk': 'RKC Waalwijk',
+                      'Olimpija': 'Olimpija Ljubljana', 'TSC Bačka Top': 'TSC',
                       'Aris Limassol FC': 'Aris Limassol', 'Häcken': 'BK Häcken', 'Servette FC': 'Servette',
-                      'RKS Raków': 'Raków Częstochowa'
+                      'RKS Raków': 'Raków Częstochowa', 'Heracles Almelo': 'Heracles'
                       }
 
 # These are lists that contain data for clubs that were not able to be found in the Elo Ratings from 8/1/2017

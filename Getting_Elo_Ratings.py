@@ -3,6 +3,7 @@ import numpy as np
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options  # Import Options from chrome module
 from selenium.webdriver.common.by import By
 from selenium.common import NoSuchElementException
 import statistics
@@ -12,7 +13,17 @@ import time
 from datetime import datetime
 from scipy.stats import poisson
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+# Use Service to install the ChromeDriver
+service = Service(ChromeDriverManager().install())
+
+# Initialize Chrome options
+options = Options()
+options.add_argument('--headless')  # Add headless argument
+
+# Pass both service and options to Chrome WebDriver
+driver = webdriver.Chrome(service=service, options=options)
+
+
 
 # gets today's date
 today = datetime.today().date()
@@ -124,6 +135,7 @@ for comp, comp_code in euro_comp_codes.items():
     last_row_dict[comp] = row_num
     end_time = time.time()
     print(comp, "Update Finished in", round((end_time - season_start_time) / 60, 2), "minutes")
+    print("Current Time:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 for league, comp_code in league_comp_codes.items():
     # Gets the last row of the last web scrape run
@@ -193,6 +205,7 @@ for league, comp_code in league_comp_codes.items():
     last_row_dict[league] = row_num
     end_time = time.time()
     print(league, "Season Updated Expected Goals in", round((end_time - start_time) / 60, 2), "minutes")
+    print("Current Time:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 # Convert the dictionary to a DataFrame
 last_row_df = pd.DataFrame(list(last_row_dict.items()), columns=['Competition', 'Last_Row'])

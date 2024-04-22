@@ -681,11 +681,12 @@ class knockout_stage:
                     matchup = []
 
         first_legs_completed = True
-        second_legs_completed = False
+        second_legs_completed = True
         first_legs = [['Atlético Madrid', 'Borussia Dortmund', 2, 1], ['Paris Saint-Germain', 'Barcelona', 2, 3],
                        ['Arsenal', 'Bayern Munich', 2, 2], ['Real Madrid', 'Manchester City', 3, 3]]
         # the home side for the first leg will be first in the second_leg list
-        second_legs = []
+        second_legs = [['Atlético Madrid', 'Borussia Dortmund', 2, 4], ['Paris Saint-Germain', 'Barcelona', 4, 1],
+                       ['Arsenal', 'Bayern Munich', 0, 1], ['Real Madrid', 'Manchester City', 1, 1]]
         for matchup_number, matchup in enumerate(qf_matchups):
             team_1 = matchup[0]
             team_2 = matchup[1]
@@ -709,7 +710,7 @@ class knockout_stage:
                 semifinalists.append(matchup[1])
             else:
                 semifinalists.append(matchup[random.randrange(0, 2)])
-        return quarterfinalists, semifinalists
+        return quarterfinalists, ["Borussia Dortmund", "Paris Saint-Germain", "Bayern Munich", "Real Madrid"]
 
     # This returns the clubs that advanced to the quarterfinals, semifinals, and final through simulations or returns
     # the actual quarterfinalists, semifinalists, and finalists if the matches have been completed
@@ -869,13 +870,13 @@ for team_number, team_stats in enumerate(group_sim_summary):
 print()
 print()
 # line_format = '{Pos:^4}|{team:^25}|{R16:^15}|{QF:^18}|{SF:^12}|{F:^10}|{W:^25}|'
-line_format = '{Pos:^4}|{team:^25}|{SF:^12}|{F:^10}|{W:^25}|'
-ucl_format = '{title:^81}'
+line_format = '{Pos:^4}|{team:^25}|{F:^10}|{W:^25}|'
+ucl_format = '{title:^68}'
 print(ucl_format.format(title='2022-23 UEFA Champions League Forecast'))
 print()
 print(line_format.format(Pos='Pos', team='Team', QF='Quarterfinals', SF='Semifinals', F='Final',
                          W='Win Champions League'))
-print('-' * 81)
+print('-' * 68)
 for rank, team_stats in enumerate(ucl_summary):
     team = team_stats[0]
     make_r16 = str(round(team_stats[1] / 100)) + '%'

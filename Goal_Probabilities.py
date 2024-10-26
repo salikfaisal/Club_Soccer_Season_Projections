@@ -12,9 +12,9 @@ import random
 # # Examines scorelines for every country and adds them to a list
 # club_results = []
 # for country_code, league in country_code_to_league.items():
-#     url = 'https://en.wikipedia.org/wiki/2022%E2%80%9323_' + league
+#     url = 'https://en.wikipedia.org/wiki/2023%E2%80%9324_' + league
 #     clubs_in_league = 20
-#     if country_code in ['GER', 'NED', 'POR']:
+#     if country_code in ['GER', 'FRA', 'NED', 'POR']:
 #         clubs_in_league = 18
 #     page = requests.get(url)
 #     soup = BeautifulSoup(page.content, 'html.parser')
@@ -55,9 +55,9 @@ def match_result(team_1_elo, team_2_elo):
     # the goal difference as a result of a random simulation
     team_1_margin = round(statistics.NormalDist(team_1_margin_mean, 1.3).inv_cdf(random.random()))
     # the goal probability distribution from 1826 matches in the 2022-23 season in Europe's top 7 leagues
-    goal_prob = [0.27050861361771944, 0.34044298605414275, 0.22210828547990155, 0.1027481542247744, 0.0406070549630845,
-                 0.015586546349466776, 0.005947497949138638, 0.0016406890894175555, 0.00020508613617719443,
-                 0.00020508613617719443, 0.0]
+    goal_prob = [0.2533840947546531, 0.32719966159052455, 0.22715736040609136, 0.12119289340101523, 0.04589678510998308,
+                 0.018824027072758036, 0.004018612521150592, 0.0012690355329949238, 0.0010575296108291032, 0.0, 0.0]
+
 
     gp_list = []
     if abs(team_1_margin) > 9:

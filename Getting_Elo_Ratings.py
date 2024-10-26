@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options  # Import Options from chrome module
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 from selenium.common import NoSuchElementException
 import statistics
 import pandas as pd
@@ -24,6 +25,15 @@ options.add_argument('--headless')  # Add headless argument
 driver = webdriver.Chrome(service=service, options=options)
 
 
+def get_url_with_retries(driver, url, retries=3, delay=5):
+    for attempt in range(retries):
+        try:
+            driver.get(url)
+            return  # Exit if successful
+        except TimeoutException:
+            print(f"TimeoutException on attempt {attempt + 1}. Retrying...")
+            time.sleep(delay)  # Wait before retrying
+    print("Failed to load the URL after multiple attempts")
 
 # gets today's date
 today = datetime.today().date()
@@ -79,7 +89,7 @@ for comp, comp_code in euro_comp_codes.items():
     date_of_last_update = previous_comp_matches['Date'].max().date()
     # gets the url for the season page
     print("Getting URL")
-    url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + comp + \
+    url = 'https://fbref.com/en/comps/' + comp_code + '/2024-2025/schedule/2024-2025-' + comp + \
           '-Scores-and-Fixtures'
     driver.get(url)
     print("Got URL. Implicit Wait Begins")
@@ -97,6 +107,10 @@ for comp, comp_code in euro_comp_codes.items():
     # extracts match information by iterating over row numbers
     # starts at 15 rows below to account for jumps in rows without match data
     for row_num in range(starting_row - 15, 213):
+        # if comp == 'Champions-League' and row_num == 132:
+        #     break
+        # elif comp == 'Europa-League' and row_num == 149:
+        #     break
         element_finder = "//tr[@data-row='" + str(row_num) + "']"
         data = rows.find_element(By.XPATH, element_finder)
 
@@ -144,9 +158,10 @@ for league, comp_code in league_comp_codes.items():
     date_of_last_update = previous_league_matches['Date'].max().date()
     start_time = time.time()
     print("Getting URL")
-    url = 'https://fbref.com/en/comps/' + comp_code + '/2023-2024/schedule/2023-2024-' + league + \
+    url = 'https://fbref.com/en/comps/' + comp_code + '/2024-2025/schedule/2024-2025-' + league + \
           '-Scores-and-Fixtures'
-    driver.get(url)
+    print(url)
+    get_url_with_retries(driver, url)
     print("Got URL. Implicit Wait Begins")
 
     # waits 10 seconds for the page to load
@@ -155,8 +170,8 @@ for league, comp_code in league_comp_codes.items():
     try:
         rows = driver.find_element(By.XPATH, "//body[@class='fb']/div[@id='wrap']/div[@id='content']"
                                              "/div[@id='all_sched']"
-                                             "/div[@id='div_sched_2023-2024_" + comp_code + "_1']"
-                                                                                            "/table[@id='sched_2023-2024_" + comp_code + "_1']"
+                                             "/div[@id='div_sched_2024-2025_" + comp_code + "_1']"
+                                                                                            "/table[@id='sched_2024-2025_" + comp_code + "_1']"
                                                                                                                                          "/tbody")
     except NoSuchElementException:
         rows = driver.find_element(By.XPATH,
@@ -202,7 +217,10 @@ for league, comp_code in league_comp_codes.items():
         leagues.append(league)
         print(date, league, home_team, "vs", away_team, "Match Expected Goals Added")
     # updates the last_row_dict to account for the last row examined in the webscraping
-    last_row_dict[league] = row_num
+    if row_num < 15:
+        last_row_dict[league] = 15
+    else:
+        last_row_dict[league] = row_num
     end_time = time.time()
     print(league, "Season Updated Expected Goals in", round((end_time - start_time) / 60, 2), "minutes")
     print("Current Time:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -249,6 +267,7 @@ xg_elo_ratings_df['Club'] = xg_elo_ratings_df['Club'].replace(elo_name_changes)
 xg_missing_club_df = club_name_changes.xg_missing_club_df
 xg_elo_ratings_df = pd.concat([xg_elo_ratings_df, xg_missing_club_df], ignore_index=True)
 
+
 # updates the names of the Clubs in the 'matches' Data Frame
 matches['Home Team'] = matches['Home Team'].replace(fbref_name_changes)
 matches['Away Team'] = matches['Away Team'].replace(fbref_name_changes)
@@ -264,6 +283,7 @@ missing_teams = set(missing_home_teams) | set(missing_away_teams)
 if len(missing_teams) > 0:
     print("Teams in Matches Data Frame but Missing from XG Elo Ratings:")
     print(missing_teams)
+print()
 
 # Each Nation in the Model is given a starting Home Field Advantage of 50 and it is updated after every match examined
 hfas = {'ENG': 50, 'ESP': 50, 'GER': 50, 'ITA': 50, 'FRA': 50, 'NED': 50, 'POR': 50}
@@ -272,7 +292,8 @@ hfas = {'ENG': 50, 'ESP': 50, 'GER': 50, 'ITA': 50, 'FRA': 50, 'NED': 50, 'POR':
 euro_neutral_dates = ['2018-05-26', '2019-06-01', '2020-08-12', '2020-08-13', '2020-08-14', '2020-08-15', '2020-08-18',
                       '2020-08-19', '2020-08-23', '2021-05-29', '2022-05-28', '2023-06-10', '2018-05-16', '2019-05-29',
                       '2020-08-05', '2020-08-06', '2020-08-10', '2020-08-11', '2020-08-16', '2020-08-17', '2020-08-21',
-                      '2021-05-26', '2022-05-28', '2023-05-31', '2022-05-25', '2023-06-07']
+                      '2021-05-26', '2022-05-28', '2023-05-31', '2022-05-25', '2023-06-07', '2024-06-01', '2024-05-29',
+                      '2024-05-22']
 # Convert date strings to datetime objects
 euro_neutral_dates = [datetime.strptime(date_str, '%Y-%m-%d') for date_str in euro_neutral_dates]
 
@@ -377,6 +398,7 @@ clubs = []
 leagues = []
 ratings = []
 start_time = time.time()
+print()
 for page_num in range(1, 13):
     # Open the URL
     driver.get('https://www.footballtransfers.com/en/teams/europe/' + str(page_num))
@@ -425,12 +447,13 @@ for page_num in range(1, 13):
         # Ensures there are no Clubs with a Rating of 0
         elif rating <= 0:
             continue
-        if club_name not in set(elo_ratings_df['Club']):
+        if club_name not in set(xg_elo_ratings_df['Club']):
             print(club_name, "In Football Transfers Data, but not in Elo Ratings Data Frame")
         clubs.append(club_name)
         leagues.append(league)
         ratings.append(rating)
 driver.quit()
+print()
 
 end_time = time.time()
 print("Examined Club Transfer Values in", round((end_time - start_time) / 60, 2), "minutes")
@@ -438,7 +461,15 @@ print("Examined Club Transfer Values in", round((end_time - start_time) / 60, 2)
 # creates a Data Frame from the extracted Information
 
 transfer_value_df = pd.DataFrame({'Club': clubs, 'League': leagues, 'Rating': ratings})
+print()
+for row_num, row in xg_elo_ratings_df.iterrows():
+    club = row['Club']
+    country = row["Country"]
+    if club not in clubs and country in ['ENG', 'GER', 'ESP', 'FRA', 'ITA', 'POR', 'NED', 'BEL', 'UKR', 'CRO', 'AUT',
+                                         'SER', 'SUI', 'SCO', 'SVK', 'CZE']:
 
+        print(club, country, "is in XG El Ratings but not in Football Transfers")
+print()
 transfer_value_df = elo_ratings_df.merge(transfer_value_df, on='Club')
 
 # Calculate z-score for the 'Rating' column

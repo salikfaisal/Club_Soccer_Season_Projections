@@ -14,7 +14,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Atlético': 'Atlético Madrid', 'Atletico': 'Atlético Madrid', 'Betis': 'Real Betis',
                     'Sociedad': 'Real Sociedad', 'Bilbao': 'Athletic Bilbao', 'Celta': 'Celta Vigo', 'Cadiz': 'Cádiz',
                     'Alaves': 'Alavés', 'Leganes': 'Leganés', 'Depor': 'Deportivo La Coruña', 'Malaga': 'Málaga',
-                    'Almeria': 'Almería',
+                    'Almeria': 'Almería', 'Petrocub': 'Petrocub Hîncești',
                     'Augsburg': 'FC Augsburg', 'Hertha': 'Hertha BSC', 'Bielefeld': 'Arminia Bielefeld',
                     'Bochum': 'VfL Bochum', 'Dortmund': 'Borussia Dortmund', 'Frankfurt': 'Eintracht Frankfurt',
                     'Freiburg': 'SC Freiburg', 'Fürth': 'Greuther Fürth', 'Fuerth': 'Greuther Fürth',
@@ -25,7 +25,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Hannover': 'Hannover 96', 'Werder': 'Werder Bremen', 'Schalke': 'Schalke 04',
                     'Duesseldorf': 'Fortuna Düsseldorf', 'Nuernberg': '1. FC Nürnberg', 'Paderborn': 'SC Paderborn',
                     'Inter': 'Inter Milan', 'Internazionale': 'Inter Milan', 'Milan': 'AC Milan', 'Spal': 'SPAL',
-                    'Verona': 'Hellas Verona',
+                    'Verona': 'Hellas Verona', 'Mlada Boleslav': 'Mladá Boleslav', 'Paphos': 'Pafos',
                     'Saint-Etienne': 'Saint-Étienne', 'Paris SG': 'Paris Saint-Germain', 'Nimes': 'Nîmes',
                     'Brugge': 'Club Brugge',
                     'Sporting': 'Sporting CP', 'Salzburg': 'RB Salzburg',
@@ -39,7 +39,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'FK Astana': 'Astana', 'Razgrad': 'Ludogorets Razgrad', 'M Tel Aviv': 'Maccabi Tel Aviv',
                     'Ostersund': 'Östersunds FK', 'Skenderbeu': 'Skënderbeu', 'BATE': 'BATE Borisov',
                     'Setubal': 'Vitória de Setúbal', 'Den Haag': 'ADO Den Haag', 'Maritimo': 'Marítimo',
-                    'Alkmaar': 'AZ', 'Heracles Almelo': 'Heracles', 'Venlo': 'VVV-Venlo', 'Breda': 'NAC Breda',
+                    'Alkmaar': 'AZ', 'Venlo': 'VVV-Venlo', 'Breda': 'NAC Breda',
                     'Belenenses': 'B-SAD', 'Fenerbahce': 'Fenerbahçe', 'Akhisar': 'Akhisarspor',
                     'Dudelange': 'F91 Dudelange', 'Videoton': 'Fehérvár', 'Larnaca': 'AEK Larnaca',
                     'Standard': 'Standard Liège', 'Zuerich': 'Zürich', 'Sarpsborg': 'Sarpsborg 08',
@@ -49,7 +49,7 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Brondby': 'Brøndby', 'Legia': 'Legia Warsaw', 'Slovacko': 'Slovácko',
                     'Shamrock': 'Shamrock Rovers',
                     'Zalgiris Vilnius': 'Žalgiris', 'Djurgarden': 'Djurgårdens IF', 'Guimaraes': 'Vitória de Guimarães',
-                    'Lustenau': 'Austria Lustenau', 'PSV': 'PSV Eindhoven', 'Sittard': 'Fortuna Sittard',
+                    'Lustenau': 'Austria Lustenau', 'Sittard': 'Fortuna Sittard',
                     'Almere': 'Almere City', 'Famalicao': 'Famalicão', 'Lausanne': 'Lausanne-Sport',
                     'Cukaricki': 'Čukarički', 'Levski': 'Levski Sofia', 'CSKA 1948 Sofia': 'CSKA 1948',
                     'St Gillis': 'Union SG', 'Leuven': 'OH Leuven', 'Haecken': 'BK Häcken', 'Goeteborg': 'IFK Göteborg',
@@ -61,7 +61,10 @@ elo_name_changes = {'Brighton': 'Brighton & Hove Albion', 'Leeds': 'Leeds United
                     'Estrela Amadora': 'Estrela da Amadora', 'Nijmegen': 'NEC', 'Zwolle':
                     'PEC Zwolle', 'Waalwijk': 'RKC Waalwijk', 'Backa Topola': 'TSC', 'Dunajska': 'DAC Dunajská Streda',
                     'Klaksvik': 'KÍ', 'Breidablik': 'Breiðablik', 'Nordsjaelland': 'Nordsjælland',
-                    'Pogon': 'Pogoń Szczecin', 'Lillestrom': 'Lillestrøm'
+                    'Pogon': 'Pogoń Szczecin', 'Lillestrom': 'Lillestrøm', 'Oxford': 'Oxford United',
+                    'AVS Futebol': 'AVS', 'Holstein': 'Holstein Kiel', 'St. Pauli': 'FC St. Pauli',
+                    'St Pauli': 'FC St. Pauli', 'Heracles': 'Heracles Almelo', 'PSV': 'PSV Eindhoven',
+                    'Víkingur': 'Víkingur Reykjavík'
                     }
 
 # changes the name of clubs from the Football Transfers website
@@ -103,10 +106,18 @@ football_transfers_name_changes = {'Milan': 'AC Milan', 'Atlético de Madrid': '
                                    'Pogon Szczecin': 'Pogoń Szczecin', '1899 Hoffenheim': 'TSG Hoffenheim',
                                    'Tottenham': 'Tottenham Hotspur', 'Wolves': 'Wolverhampton Wanderers',
                                    "Gladbach": 'Borussia Mönchengladbach', 'Preston': 'Preston North End',
-                                   'Sheff Wed': 'Sheffield Wednesday', 'Heracles Almelo': 'Heracles'
+                                   'Sheff Wed': 'Sheffield Wednesday', 'SM Caen': 'Caen', 'Parma Calcio 1913': 'Parma',
+                                   'Oxford': 'Oxford United', 'AVS Futebol SAD': 'AVS', 'Holstein': 'Holstein Kiel',
+                                    'St. Pauli': 'FC St. Pauli', 'Como 1907': 'Como', 'Sheff Utd': 'Sheffield United',
+                                   'Espanyol Barcelona': 'Espanyol', 'AJ Auxerre': 'Auxerre', 'CD Leganés': 'Leganés',
+                                   'UC Sampdoria': 'Sampdoria', 'Angers SCO': 'Angers',
+                                   'Deportivo de La Coruña': 'Deportivo La Coruña', 'Levante UD': 'Levante',
+                                   'CD Santa Clara': 'Santa Clara', "1.FC Nürnberg": "1. FC Nürnberg",
+                                   "Real Valladolid": 'Valladolid', 'Real Zaragoza': 'Zaragoza',
+                                   'Real Oviedo': 'Oviedo', 'Spezia Calcio': 'Specia', 'Heracles': 'Heracles Almelo'
                                    }
 # changes the name of Clubs on the WikiTable
-wiki_name_changes = {'Paris SG': 'Paris Saint-Germain'}
+wiki_name_changes = {'Paris SG': 'Paris Saint-Germain', 'PSV': 'PSV Eindhoven', 'Milan': 'AC Milan'}
 
 # changes the name of clubs on the Football Reference website
 fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton & Hove Albion',
@@ -119,7 +130,7 @@ fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton 
                       'Dortmund': 'Borussia Dortmund', 'Leverkusen': 'Bayer Leverkusen', 'Milan': 'AC Milan',
                       'West Ham': 'West Ham United', 'NK Maribor': 'Maribor', 'Shakhtar': 'Shakhtar Donetsk',
                       'APOEL FC': 'APOEL', 'Qarabağ FK': 'Qarabağ', 'Wolves': 'Wolverhampton Wanderers',
-                      'Düsseldorf': 'Fortuna Düsseldorf', 'Nürnberg': '1. FC Nürnberg', 'Red Star': 'Red Star Belgrade',
+                      'Düsseldorf': 'Fortuna Düsseldorf', 'Red Star': 'Red Star Belgrade',
                       'Loko Moscow': 'Lokomotiv Moscow', 'Sheffield Utd': 'Sheffield United',
                       'Paderborn 07': 'SC Paderborn', 'Arminia': 'Arminia Bielefeld',
                       'Başakşehir': 'İstanbul Başakşehir', 'Clermont Foot': 'Clermont', 'Bochum': 'VfL Bochum',
@@ -127,7 +138,7 @@ fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton 
                       'Vitória': 'Vitória de Guimarães', 'FK Vardar': 'Vardar', "Be'er Sheva": "Hapoel Be'er Sheva",
                       'Fastav Zlín': 'Zlín', 'FC Astana': 'Astana', 'Astana FK': 'Astana',
                       'Ludogorets': 'Ludogorets Razgrad', 'Östersund': 'Östersunds FK',
-                      'Skënderbeu Korçë': 'Skënderbeu', 'Rotherham Utd': 'Rotterham United',
+                      'Skënderbeu Korçë': 'Skënderbeu', 'Rotherham Utd': 'Rotherham United',
                       'Charlton Ath': 'Charlton Athletic', "P'borough Utd": 'Peterborough United',
                       'Vitória Setúbal': 'Vitória de Setúbal', 'AÉK Lárnaka': 'AEK Larnaca', 'Qarabağ Ağdam': 'Qarabağ',
                       'Apollon': 'Apollon Limassol', "Sparta R'dam": 'Sparta Rotterdam',
@@ -135,7 +146,7 @@ fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton 
                       'Wycombe': 'Wycombe Wanderers', 'Go Ahead Eag': "Go Ahead Eagles", 'NŠ Mura': 'Mura',
                       'Red Imps': 'Lincoln Red Imps', 'Qaırat Almaty': 'Kairat', 'SK Dnipro-1': 'Dnipro-1',
                       'Shamrock Rov': 'Shamrock Rovers', 'KF Ballkani Therandë': 'Ballkani', 'FK Rīgas FS': 'RFS',
-                      'Djurgården': 'Djurgårdens IF', 'Blackburn': 'Blackburn Rovers',
+                      'Djurgården': 'Djurgårdens IF', 'Blackburn': 'Blackburn Rovers', 'Pafos FC': 'Pafos',
                       'Huddersfield': 'Huddersfield Town', 'West Brom': 'West Bromwich Albion',
                       'Preston': 'Preston North End', 'Sheffield Weds': 'Sheffield Wednesday',
                       'QPR': 'Queens Park Rangers', 'Hearts': 'Heart of Midlothian', 'Vidi': 'Fehérvár',
@@ -143,7 +154,10 @@ fbref_name_changes = {'Paris S-G': 'Paris Saint-Germain', 'Brighton': 'Brighton 
                       'NEC Nijmegen': 'NEC', 'Zwolle': 'PEC Zwolle', 'Waalwijk': 'RKC Waalwijk',
                       'Olimpija': 'Olimpija Ljubljana', 'TSC Bačka Top': 'TSC',
                       'Aris Limassol FC': 'Aris Limassol', 'Häcken': 'BK Häcken', 'Servette FC': 'Servette',
-                      'RKS Raków': 'Raków Częstochowa', 'Heracles Almelo': 'Heracles'
+                      'RKS Raków': 'Raków Częstochowa', 'AVS Futebol': 'AVS', 'Petrocub': 'Petrocub Hîncești',
+                      'Gladbach': 'Borussia Mönchengladbach', 'St. Pauli': 'FC St. Pauli',
+                      "Nürnberg": '1. FC Nürnberg', 'NK Celje': 'Celje', 'FC Noah': 'Noah', 'Larne FC': 'Larne',
+                      'KV': 'Víkingur Reykjavík'
                       }
 
 # These are lists that contain data for clubs that were not able to be found in the Elo Ratings from 8/1/2017
@@ -154,12 +168,16 @@ xg_missing_club_names = ['Mallorca', 'SC Paderborn', 'Lecce', 'Elche', 'Monza', 
                          'Cambuur', 'Mura', 'Volendam', 'Spartak Trnava', 'Ballkani', 'Anorthosis', 'Fortuna Sittard',
                          'De Graafschap', 'Santa Clara', 'Bodø/Glimt', 'RFS', 'Dnipro-1', 'Union SG',
                          'Peterborough United', 'Plymouth Argyle', 'Estrela da Amadora', 'Almere City', 'TSC',
-                         'Dunajska', 'KÍ', 'Breiðablik', 'Servette', 'Aris Limassol', 'Raków Częstochowa']
+                         'Dunajska', 'KÍ', 'Breiðablik', 'Servette', 'Aris Limassol', 'Raków Częstochowa',
+                         'Oxford United', 'Portsmouth', 'AVS', 'Como', 'Cercle Brugge', 'Westerlo', 'Rotherham United',
+                         'Polissya Zhytomyr', 'OH Leuven', 'Rapid București', 'Larne', 'Noah', 'Borac Banja Luka',
+                         'Víkingur Reykjavík', 'Petrocub Hîncești', 'Pafos']
 
 xg_missing_club_countries = ['ESP', 'GER', 'ITA', 'ESP', 'ITA', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG', 'ENG',
                              'POR', 'POR', 'POR', 'POR', 'NED', 'NED', 'POR', 'POR', 'NED', 'POR', 'NED', 'CYP', 'NED',
                              'SVN', 'NED', 'SLK', 'KOS', 'CYP', 'NED', 'NED', 'POR', 'NOR', 'LAT', 'UKR', 'BEL', 'ENG',
-                             'ENG', 'POR', 'NED', 'SRB', 'SLK', 'FAR', 'ISL', 'SUI', 'CYP', 'POL']
+                             'ENG', 'POR', 'NED', 'SRB', 'SLK', 'FAR', 'ISL', 'SUI', 'CYP', 'POL', 'ENG', 'ENG', 'POR',
+                             'ITA', 'BEL', 'BEL', 'ENG', 'UKR', 'BEL', 'ROM', 'NIR', 'ARM', 'BIH', 'ISL', 'MOL', 'CYP']
 
 # These Elo Ratings were determined by looking at the closest Rating to when the Club's Rating is in use
 xg_missing_club_elo_ratings = [1501.40551758, 1357.40759277, 1373.2545166, 1470.01879883, 1386.21459961, 1374.68078613,
@@ -170,7 +188,9 @@ xg_missing_club_elo_ratings = [1501.40551758, 1357.40759277, 1373.2545166, 1470.
                                1445.86584473, 1275.10205078, 1275.10205078, 1360.27355957, 1180.12976074, 1128.54516602,
                                1350.01940918, 1315.92456055, 1443.22253418, 1423.65393066, 1405.84973145, 1404.53405762,
                                1131.38134766, 1344.78076172, 910.591674805, 1162.21923828, 1358.60681152, 1395.20166016,
-                               1222.75012207]
+                               1222.75012207, 1514, 1383, 1382, 1366.520874, 1360.163, 1315.925, 1374.681, 1261.217,
+                               1367, 1209.880737, 1046.7, 1098, 1264.19, 1154.97, 1207, 1450.38
+]
 
 xg_missing_club_df = pd.DataFrame({"Rank": 'None', "Club": xg_missing_club_names, "Country": xg_missing_club_countries,
                                    "Level": "None", "Elo": xg_missing_club_elo_ratings, "From": '2017-08-01',

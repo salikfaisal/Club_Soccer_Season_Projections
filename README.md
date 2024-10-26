@@ -18,8 +18,7 @@ Expect regular updates, typically on a weekly basis, though the frequency may va
 
 ## Simulations Include Results For:
 
-- UEFA Champions League [(Group Stage)](https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/UCL_Group_Stage_Expected_Results.csv)
-- UEFA Champions League [(Knockout Stage)](https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/UCL_Knockout_Stage_Expected_Results.csv)
+- [UEFA Champions League] (https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/UCL_Expected_Results.csv)
 - [Premier League (England)](https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/Premier_League_Expected_Results.csv)
 - [La Liga (Spain)](https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/La_Liga_Expected_Results.csv)
 - [Serie A (Italy)](https://github.com/salikfaisal/Club_Soccer_Season_Projections/blob/main/Serie_A_Expected_Results.csv)

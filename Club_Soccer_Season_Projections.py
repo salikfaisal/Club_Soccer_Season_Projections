@@ -49,7 +49,10 @@ def get_league_results_so_far(country_code):
                         result = "TBD"
                     else:
                         # gets the result of the match
-                        result = line.split("–")
+                        if "–" in line:
+                            result = line.split("–")
+                        elif "−" in line:
+                            result = line.split("−")
                         result = [int(result[0]), int(result[1])]
                 # this means the match has yet to be played
                 else:

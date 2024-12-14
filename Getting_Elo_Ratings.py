@@ -58,7 +58,6 @@ elo_ratings_df['Club'] = elo_ratings_df['Club'].replace(elo_name_changes)
 matches = pd.read_csv("Matches.csv")
 matches.drop_duplicates(inplace=True)
 matches.dropna(inplace=True)
-# Convert the 'Date' column to datetime format
 matches['Date'] = pd.to_datetime(matches['Date'])
 
 # reads a Data Frame showing the line number last read during web scraping and converts it to a dictionary
@@ -232,22 +231,13 @@ last_row_df.to_csv("Row_Update.csv", index=False, header=True)
 season_end_time = time.time()
 print("Expected Goals Match Data updated in", round((season_end_time - season_start_time) / 60, 2), "minutes")
 
-# creates a Data Frame of Expected Goals Data for All Leagues until the end of the 2022-23 Season and exports it
-# to a CSV file
+# creates a Data Frame of Expected Goals Data for All Leagues and exports it to a CSV file
 updated_matches = pd.DataFrame({"Competition": leagues, "Date": dates, "Home Team": home_teams, "Home XG": home_xgs,
                                 "Away XG": away_xgs, "Away Team": away_teams})
 
 matches = pd.concat([matches, updated_matches], ignore_index=True)
 
-# exports to a CSV file
-matches.to_csv('Matches.csv', index=False, header=True)
-
-# reads the updated data frame
-matches = pd.read_csv("Matches.csv")
-
-# Changes Format of the 'Date' column to datetime
 matches['Date'] = pd.to_datetime(matches['Date'])
-# Drops any Duplicate or NA rows and sorts the rows by date
 matches.drop_duplicates(inplace=True)
 matches.dropna(inplace=True)
 matches.sort_values(by='Date', ascending=True, inplace=True)
@@ -302,6 +292,9 @@ start_time = time.time()
 number_of_total_matches = len(matches)
 for idx, match in matches.iterrows():
     # gets key information regarding the match
+    # skips an abandoned match between Everton and Liverpool on December 7, 2024
+    if idx == 23701 and match['Home Team'] == 'Everton':
+        continue
     home_team = match['Home Team']
     away_team = match['Away Team']
     home_xg = float(match['Home XG'])
@@ -504,7 +497,7 @@ def calculate_combined_elo_rating(row):
     transfer_elo = row["Transfer_Elo"]
     if pd.isna(xg_elo):
         xg_elo = original_elo
-    if pd.isna(np.NaN):
+    if pd.isna(np.nan):
         transfer_elo = original_elo
     original_weight = 0.5
     xg_weight = 0.25
